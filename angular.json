@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "expenses-tracker"
+    }
+  },
+  "defaultProject": "expenses-tracker",
+  "cli": {
+    "analytics": "476cc26a-5abe-40be-a55a-cce5ac246408"
+  }
 }

@@ -1,0 +1,16 @@
+.card {
+  border: 1px solid var(--color-black-russian);
+  display: block;
+  box-shadow: 0px 6px 5px -6px var(--color-light-grey);
+  border-radius: 1rem;
+  background-color: var(--color-white);
+  margin-bottom: 1.2rem;
+
+  &-header {
+    padding: 1.5rem;
+  }
+
+  &-content {
+    padding: 1.5rem;
+  }
+}
