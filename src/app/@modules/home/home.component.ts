@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       expenses: new FormControl(false),
-      receipts: new FormControl(false),
+      receipts: new FormControl({ value: false, disabled: true }),
     });
 
     this.form.valueChanges.subscribe((values) => console.log(values));

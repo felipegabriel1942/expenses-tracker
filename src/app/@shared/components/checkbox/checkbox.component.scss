@@ -1,22 +1,39 @@
 .checkbox {
-  display: block;
-  position: relative;
-  padding-left: 2rem;
-
-  & > input {
+  &__input {
     display: none;
   }
 
-  &__checkmark {
-    border: 1px solid rgb(182, 181, 181);
-    padding: 3.5px 7px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-right: 0.4rem;
+  &-custom {
+    &__checkbox {
+      border: 1px solid var(--color-pink-swan);
+      padding: 0.3rem 0.8rem;
+      border-radius: 0.3rem;
+      margin-right: 0.45rem;
+      cursor: pointer;
+    }
+
+    &__label {
+      cursor: pointer;
+    }
+
+    &__icon {
+      height: 0.8rem;
+      vertical-align: middle;
+    }
   }
 
-  & > input:checked ~ &__custom > &__checkmark {
-    background-color: blueviolet;
-    transition: all 0.5s;
+  &__input:checked ~ &-custom &-custom__checkbox {
+    background-color: var(--color-purple);
+    box-shadow: 0px 0px 0px 2px var(--color-blue-violet-transparent);
+    padding: 0.3rem 0.4rem;
+    transition: background-color 0.7s;
+  }
+
+  &__input:disabled ~ &-custom &-custom__checkbox {
+    background-color: var(--color-grey-transparent);
+  }
+
+  &__input:disabled ~ &-custom &-custom__label {
+    color: var(--color-grey);
   }
 }

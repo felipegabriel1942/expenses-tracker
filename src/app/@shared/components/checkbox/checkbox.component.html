@@ -3,9 +3,16 @@
     type="checkbox"
     [id]="options?.id"
     [formControl]="options?.control"
+    class="checkbox__input"
   />
-  <label class="checkbox__custom" [for]="options?.id">
-    <span class="checkbox__checkmark">&nbsp;</span>
-    {{ options?.label }}
+  <label class="checkbox-custom" [for]="options?.id">
+    <span class="checkbox-custom__checkbox"
+      ><img
+        [src]="IC_CHECK_WHITE"
+        [hidden]="!options?.control?.value"
+        class="checkbox-custom__icon"
+      />
+    </span>
+    <span class="checkbox-custom__label">{{ options?.label }}</span>
   </label>
 </div>
