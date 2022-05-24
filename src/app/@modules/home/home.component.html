@@ -1,7 +1,16 @@
 <div style="width: 100%; padding: 1rem">
   <app-card
     ><div forHeader><p class="card-title">Card teste header</p></div>
-    <div forContent>Cart teste content</div>
+    <div forContent>
+      <div style="display: flex">
+        <div style="margin-bottom: 10px">
+          <app-checkbox [options]="checkboxExpensesOptions()"></app-checkbox>
+        </div>
+        <div style="margin-bottom: 10px">
+          <app-checkbox [options]="checkboxReceiptsOptions()"></app-checkbox>
+        </div>
+      </div>
+    </div>
   </app-card>
 
   <app-card [options]="{ hasHeader: false }">
@@ -14,34 +23,12 @@
       deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
       dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
       recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo.
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore
-      sequi, recusandae dolor dolores aliquam perferendis ipsa magni in impedit
-      optio, deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem
-      ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
+      deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
+      dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
       recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
       deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
       dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
       recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo.
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore
-      sequi, recusandae dolor dolores aliquam perferendis ipsa magni in impedit
-      optio, deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem
-      ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
-      dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo.
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore
-      sequi, recusandae dolor dolores aliquam perferendis ipsa magni in impedit
-      optio, deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem
-      ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
-      dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo.
     </div>
   </app-card>
 </div>
