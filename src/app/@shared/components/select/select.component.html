@@ -1,0 +1,17 @@
+<div #select class="select">
+  <label [for]="options?.id">{{ options?.label }}</label>
+  <div class="select__input">
+    <p>
+      {{ controlValue?.label ? controlValue?.label : "&nbsp;" }}
+    </p>
+  </div>
+  <div class="select__dropdown" *ngIf="isOpen">
+    <div
+      class="select__option"
+      *ngFor="let option of options.options"
+      (click)="setSelectedOption(option)"
+    >
+      {{ option?.label }}
+    </div>
+  </div>
+</div>

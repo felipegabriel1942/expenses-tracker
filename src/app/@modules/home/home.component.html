@@ -3,7 +3,7 @@
     ><div forHeader><p class="card-title">Card teste header</p></div>
     <div forContent>
       <div style="display: flex">
-        <div style="margin-bottom: 10px; margin-right: 10px;">
+        <div style="margin-bottom: 10px; margin-right: 10px">
           <app-checkbox [options]="checkboxExpensesOptions()"></app-checkbox>
         </div>
         <div style="margin-bottom: 10px">
@@ -29,6 +29,13 @@
       deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
       dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
       recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
+    </div>
+  </app-card>
+
+  <app-card [options]="{ hasHeader: false }">
+    <div forContent>
+      <app-select [options]="carSelectOptions1()"></app-select>
+      <app-select [options]="carSelectOptions2()"></app-select>
     </div>
   </app-card>
 </div>
