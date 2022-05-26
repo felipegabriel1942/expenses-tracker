@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 import { SelectInterface } from 'src/app/@shared/components/select/interfaces/select.inteface';
+
 import { CheckboxInterface } from './../../@shared/components/checkbox/interface/checkbox.interface';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,10 +20,12 @@ export class HomeComponent implements OnInit {
       expenses: new FormControl(false),
       receipts: new FormControl({ value: false, disabled: true }),
       car: new FormControl(null),
-      car2: new FormControl(null),
+      car2: new FormControl({ value: null, disabled: true }),
     });
 
     this.form.valueChanges.subscribe((values) => console.log(values));
+
+    this.car.setErrors({require: true});
   }
 
   public checkboxExpensesOptions(): CheckboxInterface {

@@ -1,17 +1,29 @@
 <div #select class="select">
   <label [for]="options?.id">{{ options?.label }}</label>
-  <div class="select__input">
-    <p>
+  <div
+    class="select__input"
+    [ngClass]="{
+      'select__input-disabled': isDisabled,
+      'select__input-invalid': isInvalid,
+      'select__input-focused': isOpen
+    }"
+  >
+    <span>
       {{ controlValue?.label ? controlValue?.label : "&nbsp;" }}
-    </p>
+    </span>
+    <img class="dropdown-icon" [src]="IC_DOWN_ARROW" *ngIf="!isDisabled" />
   </div>
   <div class="select__dropdown" *ngIf="isOpen">
     <div
       class="select__option"
-      *ngFor="let option of options.options"
+      *ngFor="let option of options?.options"
       (click)="setSelectedOption(option)"
     >
       {{ option?.label }}
     </div>
   </div>
 </div>
+
+<p *ngIf="isInvalid" style="padding-top: 0.3rem; color: red">
+  Campo obrigatório.
+</p>

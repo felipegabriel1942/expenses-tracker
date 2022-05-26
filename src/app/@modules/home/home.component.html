@@ -34,7 +34,9 @@
 
   <app-card [options]="{ hasHeader: false }">
     <div forContent>
-      <app-select [options]="carSelectOptions1()"></app-select>
+      <div style="margin-bottom: 15px;">
+        <app-select [options]="carSelectOptions1()"></app-select>
+      </div>
       <app-select [options]="carSelectOptions2()"></app-select>
     </div>
   </app-card>

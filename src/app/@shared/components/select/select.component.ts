@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   Input,
   OnInit,
   Renderer2,
@@ -11,6 +10,8 @@ import {
 import { SelectOptionInterface } from './interfaces/select-option.interface';
 import { SelectInterface } from './interfaces/select.inteface';
 
+import { IC_DOWN_ARROW } from './../../../consts/assets';
+
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
@@ -19,30 +20,50 @@ import { SelectInterface } from './interfaces/select.inteface';
 export class SelectComponent implements OnInit {
   @Input() options: SelectInterface;
 
-  // TODO: CRIAR O ESTADO DE DESABILITADO
   @ViewChild('select', { static: false }) selectElement: ElementRef;
 
   public isOpen = false;
 
+  public IC_DOWN_ARROW = IC_DOWN_ARROW;
+
   constructor(private readonly renderer: Renderer2) {}
 
   ngOnInit(): void {
+    this.listenDomEvents();
+  }
+
+  private listenDomEvents(): void {
     this.renderer.listen('window', 'click', (event: Event) => {
-      this.isOpen =
-        this.selectElement.nativeElement.contains(event.target) && !this.isOpen;
+      this.openCloseDropdown(event);
     });
+  }
+
+  private openCloseDropdown(event: Event): void {
+    if (this.isDisabled) {
+      return;
+    }
+
+    this.isOpen = this.componentIsClicked(event) && !this.isOpen;
+  }
+
+  private componentIsClicked(event: Event): boolean {
+    return this.selectElement.nativeElement.contains(event.target);
   }
 
   public setSelectedOption(option: SelectOptionInterface): void {
     this.options.control.setValue(option);
-    this.changeIsOpenState();
-  }
-
-  public changeIsOpenState(): void {
-    this.isOpen = !this.isOpen;
+    this.isOpen = false;
   }
 
   public get controlValue(): any {
     return this.options.control.value;
+  }
+
+  public get isDisabled(): boolean {
+    return this.options.control.disabled;
+  }
+
+  public get isInvalid(): boolean {
+    return this.options.control.invalid;
   }
 }
