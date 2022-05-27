@@ -19,13 +19,16 @@ export class HomeComponent implements OnInit {
     this.form = new FormGroup({
       expenses: new FormControl(false),
       receipts: new FormControl({ value: false, disabled: true }),
-      car: new FormControl(null),
-      car2: new FormControl({ value: null, disabled: true }),
+      disableSelects: new FormControl(false),
+      cars: new FormGroup({
+        car: new FormControl(null),
+        car2: new FormControl(null),
+      }),
     });
 
     this.form.valueChanges.subscribe((values) => console.log(values));
 
-    this.car.setErrors({require: true});
+    this.car.setErrors({ require: true, email: true });
   }
 
   public checkboxExpensesOptions(): CheckboxInterface {
@@ -41,6 +44,14 @@ export class HomeComponent implements OnInit {
       id: 'checkbox-receitas',
       label: 'Receitas',
       control: this.receipts,
+    };
+  }
+
+  public checkboxDisableSelectOptions(): CheckboxInterface {
+    return {
+      id: 'checkbox-disable-selects',
+      label: 'Desabilitar',
+      control: this.disableSelects,
     };
   }
 
@@ -88,6 +99,10 @@ export class HomeComponent implements OnInit {
     };
   }
 
+  public disableCarSelects(checked: boolean): void {
+    checked ? this.cars.disable() : this.cars.enable();
+  }
+
   public get expenses(): AbstractControl {
     return this.form.get('expenses');
   }
@@ -96,11 +111,19 @@ export class HomeComponent implements OnInit {
     return this.form.get('receipts');
   }
 
+  public get cars(): AbstractControl {
+    return this.form.get('cars');
+  }
+
   public get car(): AbstractControl {
-    return this.form.get('car');
+    return this.cars.get('car');
   }
 
   public get car2(): AbstractControl {
-    return this.form.get('car2');
+    return this.cars.get('car2');
+  }
+
+  public get disableSelects(): AbstractControl {
+    return this.form.get('disableSelects');
   }
 }

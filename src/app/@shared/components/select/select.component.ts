@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
@@ -11,20 +12,21 @@ import { SelectOptionInterface } from './interfaces/select-option.interface';
 import { SelectInterface } from './interfaces/select.inteface';
 
 import { IC_DOWN_ARROW } from './../../../consts/assets';
+import { ValidationUtils } from 'src/app/utils';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent implements OnInit, OnDestroy {
   @Input() options: SelectInterface;
 
   @ViewChild('select', { static: false }) selectElement: ElementRef;
 
   public isOpen = false;
-
   public IC_DOWN_ARROW = IC_DOWN_ARROW;
+  private unlistener: () => void;
 
   constructor(private readonly renderer: Renderer2) {}
 
@@ -32,10 +34,18 @@ export class SelectComponent implements OnInit {
     this.listenDomEvents();
   }
 
+  ngOnDestroy(): void {
+    this.unlistener();
+  }
+
   private listenDomEvents(): void {
-    this.renderer.listen('window', 'click', (event: Event) => {
-      this.openCloseDropdown(event);
-    });
+    this.unlistener = this.renderer.listen(
+      'window',
+      'click',
+      (event: Event) => {
+        this.openCloseDropdown(event);
+      }
+    );
   }
 
   private openCloseDropdown(event: Event): void {
@@ -65,5 +75,9 @@ export class SelectComponent implements OnInit {
 
   public get isInvalid(): boolean {
     return this.options.control.invalid;
+  }
+
+  public get errorMessage(): string {
+    return ValidationUtils.getErrorMessage(this.options.control.errors);
   }
 }

@@ -1,19 +1,8 @@
 <div style="width: 100%; padding: 1rem">
-  <app-card
-    ><div forHeader><p class="card-title">Card teste header</p></div>
-    <div forContent>
-      <div style="display: flex">
-        <div style="margin-bottom: 10px; margin-right: 10px">
-          <app-checkbox [options]="checkboxExpensesOptions()"></app-checkbox>
-        </div>
-        <div style="margin-bottom: 10px">
-          <app-checkbox [options]="checkboxReceiptsOptions()"></app-checkbox>
-        </div>
-      </div>
+  <app-card>
+    <div forHeader>
+      <p class="card-title">Card</p>
     </div>
-  </app-card>
-
-  <app-card [options]="{ hasHeader: false }">
     <div forContent>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore
       sequi, recusandae dolor dolores aliquam perferendis ipsa magni in impedit
@@ -32,9 +21,32 @@
     </div>
   </app-card>
 
-  <app-card [options]="{ hasHeader: false }">
+  <app-card
+    ><div forHeader><p class="card-title">Checkbox</p></div>
     <div forContent>
-      <div style="margin-bottom: 15px;">
+      <div style="display: flex">
+        <div style="margin-bottom: 10px; margin-right: 10px">
+          <app-checkbox [options]="checkboxExpensesOptions()"></app-checkbox>
+        </div>
+        <div style="margin-bottom: 10px">
+          <app-checkbox [options]="checkboxReceiptsOptions()"></app-checkbox>
+        </div>
+      </div>
+    </div>
+  </app-card>
+
+  <app-card>
+    <div forHeader>
+      <div style="display: flex; justify-content: space-between">
+        <p class="card-title">Select</p>
+        <app-checkbox
+          [options]="checkboxDisableSelectOptions()"
+          (valueChange)="disableCarSelects($event)"
+        ></app-checkbox>
+      </div>
+    </div>
+    <div forContent>
+      <div style="margin-bottom: 15px">
         <app-select [options]="carSelectOptions1()"></app-select>
       </div>
       <app-select [options]="carSelectOptions2()"></app-select>

@@ -1,11 +1,11 @@
 <div #select class="select">
-  <label [for]="options?.id">{{ options?.label }}</label>
+  <label [for]="options?.id" class="select__label">{{ options?.label }}</label>
   <div
     class="select__input"
     [ngClass]="{
-      'select__input-disabled': isDisabled,
-      'select__input-invalid': isInvalid,
-      'select__input-focused': isOpen
+      'select__input--disabled': isDisabled,
+      'select__input--invalid': isInvalid,
+      'select__input--focused': isOpen
     }"
   >
     <span>
@@ -25,5 +25,5 @@
 </div>
 
 <p *ngIf="isInvalid" style="padding-top: 0.3rem; color: red">
-  Campo obrigatório.
+  {{ errorMessage }}
 </p>

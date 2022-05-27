@@ -1,18 +1,31 @@
-<div class="checkbox">
+<div #checkbox class="checkbox">
   <input
     type="checkbox"
+    class="checkbox__input"
     [id]="options?.id"
     [formControl]="options?.control"
-    class="checkbox__input"
+    (click)="onChange()"
   />
   <label class="checkbox-custom" [for]="options?.id">
-    <span class="checkbox-custom__checkbox"
+    <span
+      class="checkbox-custom__checkbox"
+      [ngClass]="{
+        'checkbox-custom__checkbox--checked': isChecked,
+        'checkbox-custom__checkbox--disabled': isDisabled,
+        'checkbox-custom__checkbox--focused': isFocused
+      }"
       ><img
         [src]="IC_CHECK_WHITE"
         [hidden]="!options?.control?.value"
         class="checkbox-custom__icon"
       />
     </span>
-    <span class="checkbox-custom__label">{{ options?.label }}</span>
+    <span
+      class="checkbox-custom__label"
+      [ngClass]="{
+        'checkbox-custom__label--disabled': isDisabled
+      }"
+      >{{ options?.label }}</span
+    >
   </label>
 </div>
