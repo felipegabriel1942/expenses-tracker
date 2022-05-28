@@ -12,7 +12,6 @@ import { SelectOptionInterface } from './interfaces/select-option.interface';
 import { SelectInterface } from './interfaces/select.inteface';
 
 import { IC_DOWN_ARROW } from './../../../consts/assets';
-import { ValidationUtils } from 'src/app/utils';
 
 @Component({
   selector: 'app-select',
@@ -75,9 +74,5 @@ export class SelectComponent implements OnInit, OnDestroy {
 
   public get isInvalid(): boolean {
     return this.options.control.invalid;
-  }
-
-  public get errorMessage(): string {
-    return ValidationUtils.getErrorMessage(this.options.control.errors);
   }
 }

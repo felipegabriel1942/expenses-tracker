@@ -24,6 +24,6 @@
   </div>
 </div>
 
-<p *ngIf="isInvalid" style="padding-top: 0.3rem; color: red">
-  {{ errorMessage }}
-</p>
+<app-error-message
+  [options]="{ control: options?.control }"
+></app-error-message>
