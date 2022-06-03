@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
+import { InputInterface } from 'src/app/@shared/components/input/interface/input.interface';
 import { SelectInterface } from 'src/app/@shared/components/select/interfaces/select.inteface';
 
 import { CheckboxInterface } from './../../@shared/components/checkbox/interface/checkbox.interface';
@@ -24,11 +25,15 @@ export class HomeComponent implements OnInit {
         car: new FormControl(null),
         car2: new FormControl(null),
       }),
+      pessoa: new FormGroup({
+        nome: new FormControl(null),
+      }),
     });
 
     this.form.valueChanges.subscribe((values) => console.log(values));
 
     this.car.setErrors({ require: true, email: true });
+    this.nomePessoa.setErrors({ require: true });
   }
 
   public checkboxExpensesOptions(): CheckboxInterface {
@@ -99,6 +104,14 @@ export class HomeComponent implements OnInit {
     };
   }
 
+  public inputNomePessoaOptions(): InputInterface {
+    return {
+      id: 'input-nome-pessoa',
+      control: this.nomePessoa,
+      label: 'Nome',
+    };
+  }
+
   public disableCarSelects(checked: boolean): void {
     checked ? this.cars.disable() : this.cars.enable();
   }
@@ -125,5 +138,9 @@ export class HomeComponent implements OnInit {
 
   public get disableSelects(): AbstractControl {
     return this.form.get('disableSelects');
+  }
+
+  public get nomePessoa(): AbstractControl {
+    return this.form.get(['pessoa', 'nome']);
   }
 }

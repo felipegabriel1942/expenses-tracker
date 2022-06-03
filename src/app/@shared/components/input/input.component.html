@@ -1,0 +1,15 @@
+<div class="input">
+  <label class="input__label" *ngIf="options?.label">{{
+    options?.label
+  }}</label>
+  <input
+    #input
+    class="input__field"
+    [formControl]="options?.control"
+    [ngClass]="{
+      'input__field--disabled': isDisabled,
+      'input__field--focused': isFocused,
+      'input__field--invalid': isInvalid
+    }"
+  />
+</div>

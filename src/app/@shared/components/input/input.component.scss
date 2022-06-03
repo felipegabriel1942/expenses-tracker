@@ -1,0 +1,22 @@
+.input {
+  &__field {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-light-grey);
+    font-family: "Lato", sans-serif;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    outline: none;
+
+    &--focused {
+      border: 1px solid var(--color-purple);
+      box-shadow: 0px 0px 0px 4px var(--color-blue-violet-transparent);
+      transition: all 0.2s;
+    }
+
+    &--invalid {
+      border: 1px solid var(--color-error);
+    }
+  }
+}
