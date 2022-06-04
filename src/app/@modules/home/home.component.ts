@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { InputInterface } from 'src/app/@shared/components/input/interface/input.interface';
 import { SelectInterface } from 'src/app/@shared/components/select/interfaces/select.inteface';
 
@@ -22,18 +22,15 @@ export class HomeComponent implements OnInit {
       receipts: new FormControl({ value: false, disabled: true }),
       disableSelects: new FormControl(false),
       cars: new FormGroup({
-        car: new FormControl(null),
+        car: new FormControl(null, [Validators.required]),
         car2: new FormControl(null),
       }),
       pessoa: new FormGroup({
-        nome: new FormControl(null),
+        nome: new FormControl(null, [Validators.required]),
       }),
     });
 
     this.form.valueChanges.subscribe((values) => console.log(values));
-
-    this.car.setErrors({ require: true, email: true });
-    this.nomePessoa.setErrors({ require: true });
   }
 
   public checkboxExpensesOptions(): CheckboxInterface {

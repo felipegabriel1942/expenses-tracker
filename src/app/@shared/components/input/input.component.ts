@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
@@ -13,7 +14,7 @@ import { InputInterface } from './interface/input.interface';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, OnDestroy {
   @Input() options: InputInterface;
 
   @ViewChild('input', { static: false }) selectElement: ElementRef;
@@ -25,6 +26,10 @@ export class InputComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenDomEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.unlistener();
   }
 
   private listenDomEvents(): void {
@@ -58,6 +63,6 @@ export class InputComponent implements OnInit {
   }
 
   public get isInvalid(): boolean {
-    return this.options.control.invalid;
+    return this.options.control.invalid && this.options.control.touched;
   }
 }

@@ -43,6 +43,7 @@ export class SelectComponent implements OnInit, OnDestroy {
       'click',
       (event: Event) => {
         this.openCloseDropdown(event);
+        this.markControlAsTouched();
       }
     );
   }
@@ -53,6 +54,12 @@ export class SelectComponent implements OnInit, OnDestroy {
     }
 
     this.isOpen = this.componentIsClicked(event) && !this.isOpen;
+  }
+
+  private markControlAsTouched(): void {
+    if (this.isOpen && this.options.control.untouched) {
+      this.options.control.markAsTouched();
+    }
   }
 
   private componentIsClicked(event: Event): boolean {
@@ -73,6 +80,6 @@ export class SelectComponent implements OnInit, OnDestroy {
   }
 
   public get isInvalid(): boolean {
-    return this.options.control.invalid;
+    return this.options.control.invalid && this.options.control.touched;
   }
 }

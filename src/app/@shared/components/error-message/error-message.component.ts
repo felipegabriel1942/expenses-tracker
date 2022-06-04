@@ -15,7 +15,7 @@ export class ErrorMessageComponent implements OnInit {
   ngOnInit(): void {}
 
   public get isInvalid(): boolean {
-    return this.options.control.invalid;
+    return this.options.control.invalid && this.options.control.touched;
   }
 
   public get errorMessage(): string {
