@@ -3,7 +3,8 @@
     options?.label
   }}</label>
   <input
-    #input
+    appFocus
+    (onFocus)="setFocus($event)"
     class="input__field"
     type="text"
     [formControl]="options?.control"

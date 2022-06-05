@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InputInterface } from './interface/input.interface';
 import { InputType } from 'src/app/@shared/components/input/enums/input-type.enum';
 
@@ -18,45 +10,16 @@ import { InputType } from 'src/app/@shared/components/input/enums/input-type.enu
 export class InputComponent implements OnInit, OnDestroy {
   @Input() options: InputInterface;
 
-  @ViewChild('input', { static: false }) selectElement: ElementRef;
-
   public isFocused = false;
-  private unlistener: () => void;
 
-  constructor(private readonly renderer: Renderer2) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.listenDomEvents();
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this.unlistener();
-  }
+  ngOnDestroy(): void {}
 
-  private listenDomEvents(): void {
-    this.unlistener = this.renderer.listen(
-      'window',
-      'click',
-      (event: PointerEvent) => {
-        if (event.pointerId < 0) {
-          return;
-        }
-
-        this.focusElement(event);
-      }
-    );
-  }
-
-  private focusElement(event: Event): void {
-    if (this.isDisabled) {
-      return;
-    }
-
-    this.isFocused = this.componentIsClicked(event);
-  }
-
-  private componentIsClicked(event: Event): boolean {
-    return this.selectElement.nativeElement.contains(event.target);
+  public setFocus(focused: boolean): void {
+    this.isFocused = focused && !this.isDisabled;
   }
 
   public get isDisabled(): boolean {

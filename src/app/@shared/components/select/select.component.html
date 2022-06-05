@@ -1,8 +1,10 @@
-<div #select class="select">
+<div class="select">
   <label [for]="options?.id" class="select__label" *ngIf="options?.label">{{
     options?.label
   }}</label>
   <div
+    appFocus
+    (onFocus)="setFocus($event)"
     class="select__input"
     [ngClass]="{
       'select__input--disabled': isDisabled,

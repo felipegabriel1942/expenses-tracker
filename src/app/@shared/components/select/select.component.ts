@@ -18,52 +18,25 @@ import { IC_DOWN_ARROW } from './../../../consts/assets';
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
 })
-export class SelectComponent implements OnInit, OnDestroy {
+export class SelectComponent implements OnInit {
   @Input() options: SelectInterface;
-
-  @ViewChild('select', { static: false }) selectElement: ElementRef;
 
   public isFocused = false;
   public IC_DOWN_ARROW = IC_DOWN_ARROW;
-  private unlistener: () => void;
 
-  constructor(private readonly renderer: Renderer2) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.listenDomEvents();
-  }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this.unlistener();
-  }
-
-  private listenDomEvents(): void {
-    this.unlistener = this.renderer.listen(
-      'window',
-      'click',
-      (event: Event) => {
-        this.openCloseDropdown(event);
-        this.markControlAsTouched();
-      }
-    );
-  }
-
-  private openCloseDropdown(event: Event): void {
-    if (this.isDisabled) {
-      return;
-    }
-
-    this.isFocused = this.componentIsClicked(event) && !this.isFocused;
+  public setFocus(focused: boolean): void {
+    this.isFocused = focused && !this.isDisabled;
+    this.markControlAsTouched();
   }
 
   private markControlAsTouched(): void {
     if (this.isFocused && this.options.control.untouched) {
       this.options.control.markAsTouched();
     }
-  }
-
-  private componentIsClicked(event: Event): boolean {
-    return this.selectElement.nativeElement.contains(event.target);
   }
 
   public setSelectedOption(option: SelectOptionInterface): void {

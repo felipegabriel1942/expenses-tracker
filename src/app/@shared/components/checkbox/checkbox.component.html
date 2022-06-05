@@ -1,4 +1,4 @@
-<div #checkbox class="checkbox">
+<div class="checkbox">
   <input
     type="checkbox"
     class="checkbox__input"
@@ -6,7 +6,12 @@
     [formControl]="options?.control"
     (click)="onChange()"
   />
-  <label class="checkbox-custom" [for]="options?.id">
+  <label
+    appFocus
+    (onFocus)="setFocus($event)"
+    class="checkbox-custom"
+    [for]="options?.id"
+  >
     <span
       class="checkbox-custom__checkbox"
       [ngClass]="{

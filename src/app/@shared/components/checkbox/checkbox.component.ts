@@ -23,49 +23,21 @@ export class CheckboxComponent implements OnInit, OnDestroy {
 
   @Output() valueChange = new EventEmitter<boolean>();
 
-  @ViewChild('checkbox', { static: false }) selectElement: ElementRef;
-
   public IC_CHECK_WHITE = IC_CHECK_WHITE;
   public isFocused = false;
-  private unlistener: () => void;
 
-  constructor(private readonly renderer: Renderer2) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.initOptions();
-    this.listenDomEvents();
   }
 
-  ngOnDestroy(): void {
-    this.unlistener();
-  }
+  ngOnDestroy(): void {}
 
   initOptions(): void {}
 
-  private listenDomEvents(): void {
-    this.unlistener = this.renderer.listen(
-      'window',
-      'click',
-      (event: PointerEvent) => {
-        if (event.pointerId < 0) {
-          return;
-        }
-
-        this.focusElement(event);
-      }
-    );
-  }
-
-  private focusElement(event: Event): void {
-    if (this.isDisabled) {
-      return;
-    }
-
-    this.isFocused = this.componentIsClicked(event) && !this.isChecked;
-  }
-
-  private componentIsClicked(event: Event): boolean {
-    return this.selectElement.nativeElement.contains(event.target);
+  public setFocus(focused: boolean): void {
+    this.isFocused = focused && !this.isChecked;
   }
 
   public onChange(): void {
