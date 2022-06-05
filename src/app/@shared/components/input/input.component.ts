@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { InputInterface } from './interface/input.interface';
+import { InputType } from 'src/app/@shared/components/input/enums/input-type.enum';
 
 @Component({
   selector: 'app-input',
@@ -64,5 +65,21 @@ export class InputComponent implements OnInit, OnDestroy {
 
   public get isInvalid(): boolean {
     return this.options.control.invalid && this.options.control.touched;
+  }
+
+  public get prefix(): string {
+    const prefixes = {
+      [InputType.CURRENCY]: 'R$ ',
+    };
+
+    return prefixes[this.options.type] || '';
+  }
+
+  public get mask(): string {
+    const masks = {
+      [InputType.CURRENCY]: 'separator.2',
+    };
+
+    return masks[this.options.type] || '';
   }
 }

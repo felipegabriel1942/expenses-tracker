@@ -2,7 +2,6 @@ import { ValidationErrors } from '@angular/forms';
 
 export class ValidationUtils {
   static getErrorMessage(errors?: ValidationErrors): string {
-    console.log(errors);
     if (errors == null) {
       return;
     }

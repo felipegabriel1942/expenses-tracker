@@ -1,19 +1,23 @@
 <div class="input">
-  <label class="input__label" *ngIf="options?.label">{{
+  <label [for]="options?.id" class="input__label" *ngIf="options?.label">{{
     options?.label
   }}</label>
   <input
     #input
     class="input__field"
+    type="text"
     [formControl]="options?.control"
     [ngClass]="{
       'input__field--disabled': isDisabled,
       'input__field--focused': isFocused,
       'input__field--invalid': isInvalid
     }"
+    [prefix]="prefix"
+    [mask]="mask"
+    [thousandSeparator]="'.'"
   />
-</div>
 
-<app-error-message
-  [options]="{ control: options?.control }"
-></app-error-message>
+  <app-error-message
+    [options]="{ control: options?.control }"
+  ></app-error-message>
+</div>

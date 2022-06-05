@@ -1,11 +1,13 @@
 <div #select class="select">
-  <label [for]="options?.id" class="select__label">{{ options?.label }}</label>
+  <label [for]="options?.id" class="select__label" *ngIf="options?.label">{{
+    options?.label
+  }}</label>
   <div
     class="select__input"
     [ngClass]="{
       'select__input--disabled': isDisabled,
       'select__input--invalid': isInvalid,
-      'select__input--focused': isOpen
+      'select__input--focused': isFocused
     }"
   >
     <span>
@@ -13,7 +15,7 @@
     </span>
     <img class="dropdown-icon" [src]="IC_DOWN_ARROW" *ngIf="!isDisabled" />
   </div>
-  <div class="select__dropdown" *ngIf="isOpen">
+  <div class="select__dropdown" *ngIf="isFocused">
     <div
       class="select__option"
       *ngFor="let option of options?.options"
@@ -22,8 +24,7 @@
       {{ option?.label }}
     </div>
   </div>
+  <app-error-message
+    [options]="{ control: options?.control }"
+  ></app-error-message>
 </div>
-
-<app-error-message
-  [options]="{ control: options?.control }"
-></app-error-message>

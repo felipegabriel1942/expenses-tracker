@@ -7,17 +7,7 @@
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore
       sequi, recusandae dolor dolores aliquam perferendis ipsa magni in impedit
       optio, deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem
-      ipsum, dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
-      dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
-      dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
-      deserunt a non tempora quaerat asperiores odio? Sit, nemo. Lorem ipsum,
-      dolor sit amet consectetur adipisicing elit. Facilis dolore sequi,
-      recusandae dolor dolores aliquam perferendis ipsa magni in impedit optio,
+      ipsum, dolor sit amet consectetur adipisicing elit.
     </div>
   </app-card>
 
@@ -28,7 +18,7 @@
         <div style="margin-bottom: 10px; margin-right: 10px">
           <app-checkbox [options]="checkboxExpensesOptions()"></app-checkbox>
         </div>
-        <div style="margin-bottom: 10px">
+        <div class="margin-bottom">
           <app-checkbox [options]="checkboxReceiptsOptions()"></app-checkbox>
         </div>
       </div>
@@ -46,7 +36,7 @@
       </div>
     </div>
     <div forContent>
-      <div style="margin-bottom: 15px">
+      <div class="margin-bottom">
         <app-select [options]="carSelectOptions1()"></app-select>
       </div>
       <app-select [options]="carSelectOptions2()"></app-select>
@@ -58,8 +48,11 @@
       <p class="card-title">Input</p>
     </div>
     <div forContent>
-      <div style="margin-bottom: 15px">
+      <div class="margin-bottom">
         <app-input [options]="inputNomePessoaOptions()"></app-input>
+      </div>
+      <div class="margin-bottom">
+        <app-input [options]="inputSalarioPessoaOptions()"></app-input>
       </div>
     </div>
   </app-card>

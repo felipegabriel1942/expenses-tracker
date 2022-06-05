@@ -23,7 +23,7 @@ export class SelectComponent implements OnInit, OnDestroy {
 
   @ViewChild('select', { static: false }) selectElement: ElementRef;
 
-  public isOpen = false;
+  public isFocused = false;
   public IC_DOWN_ARROW = IC_DOWN_ARROW;
   private unlistener: () => void;
 
@@ -53,11 +53,11 @@ export class SelectComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.isOpen = this.componentIsClicked(event) && !this.isOpen;
+    this.isFocused = this.componentIsClicked(event) && !this.isFocused;
   }
 
   private markControlAsTouched(): void {
-    if (this.isOpen && this.options.control.untouched) {
+    if (this.isFocused && this.options.control.untouched) {
       this.options.control.markAsTouched();
     }
   }
@@ -68,7 +68,7 @@ export class SelectComponent implements OnInit, OnDestroy {
 
   public setSelectedOption(option: SelectOptionInterface): void {
     this.options.control.setValue(option);
-    this.isOpen = false;
+    this.isFocused = false;
   }
 
   public get controlValue(): any {

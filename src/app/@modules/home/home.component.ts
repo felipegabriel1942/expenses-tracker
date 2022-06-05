@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, AbstractControl, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  AbstractControl,
+  Validators,
+} from '@angular/forms';
+import { InputType } from 'src/app/@shared/components/input/enums/input-type.enum';
 import { InputInterface } from 'src/app/@shared/components/input/interface/input.interface';
 import { SelectInterface } from 'src/app/@shared/components/select/interfaces/select.inteface';
 
@@ -26,7 +32,12 @@ export class HomeComponent implements OnInit {
         car2: new FormControl(null),
       }),
       pessoa: new FormGroup({
-        nome: new FormControl(null, [Validators.required]),
+        nome: new FormControl({ value: null, disabled: false }, [
+          Validators.required,
+        ]),
+        salario: new FormControl({ value: null, disabled: false }, [
+          Validators.required,
+        ]),
       }),
     });
 
@@ -105,7 +116,16 @@ export class HomeComponent implements OnInit {
     return {
       id: 'input-nome-pessoa',
       control: this.nomePessoa,
-      label: 'Nome',
+      label: 'Nome'
+    };
+  }
+
+  public inputSalarioPessoaOptions(): InputInterface {
+    return {
+      id: 'input-salario-pessoa',
+      control: this.salario,
+      label: 'Salario',
+      type: InputType.CURRENCY
     };
   }
 
@@ -139,5 +159,9 @@ export class HomeComponent implements OnInit {
 
   public get nomePessoa(): AbstractControl {
     return this.form.get(['pessoa', 'nome']);
+  }
+
+  public get salario(): AbstractControl {
+    return this.form.get(['pessoa', 'salario']);
   }
 }
