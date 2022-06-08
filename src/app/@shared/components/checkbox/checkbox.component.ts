@@ -1,13 +1,10 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
-  Renderer2,
-  ViewChild,
 } from '@angular/core';
 
 import { CheckboxInterface } from './interface/checkbox.interface';

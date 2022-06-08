@@ -7,6 +7,7 @@ import { CardModule } from './../../@shared/components/card/card.module';
 import { CheckboxModule } from './../../@shared/components/checkbox/checkbox.module';
 import { SelectModule } from './../../@shared/components/select/select.module';
 import { InputModule } from 'src/app/@shared/components/input';
+import { DatepickerModule } from './../../@shared/components/datepicker/datepicker.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,7 +17,8 @@ import { InputModule } from 'src/app/@shared/components/input';
     CardModule,
     CheckboxModule,
     SelectModule,
-    InputModule
+    InputModule,
+    DatepickerModule,
   ],
 })
 export class HomeModule {}

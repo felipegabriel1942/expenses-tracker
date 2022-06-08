@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { SelectOptionInterface } from './interfaces/select-option.interface';
 import { SelectInterface } from './interfaces/select.inteface';
