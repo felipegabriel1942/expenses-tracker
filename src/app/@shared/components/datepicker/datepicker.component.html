@@ -1,7 +1,40 @@
-<div
-  style="width: 250px; height: 250px; background-color: rgb(192, 208, 238); display: flex;"
->
-  <div *ngFor="let day of days" style="width: 20%; ">
-    {{ day }}
+<div class="datepicker">
+  <div>Month: {{ selectedMonth + 1 }} | Year: {{ selectedYear }}</div>
+
+  <button (click)="previousMonth()"><</button>
+  <button (click)="nextMonth()">></button>
+  <div class="datepicker__calendar">
+    <div style="display: flex; justify-content: center; align-items: center">
+      Dom
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      Seg
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      Ter
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      Qua
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      Qui
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      Sex
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      Sab
+    </div>
+    <div
+      *ngFor="let date of dates"
+      class="datepicker__day"
+      [ngClass]="{
+        'datepicker__day--selected': isSelectedDate(date),
+        'datepicker__day--disabled': !isFromSelectedMonth(date)
+      }"
+      (click)="onSelectDate(date)"
+    >
+      {{ date?.getDate() }}
+    </div>
   </div>
 </div>

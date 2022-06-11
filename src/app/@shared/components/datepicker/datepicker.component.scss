@@ -1,0 +1,27 @@
+.datepicker {
+  &__calendar {
+    width: 26rem;
+    height: 26rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  &__day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &--selected {
+      background-color: var(--color-purple);
+      border-radius: 3rem;
+      color: white;
+      transition: background-color 0.5s;
+    }
+
+    &--disabled {
+      color: var(--color-pink-swan);
+      cursor: default;
+    }
+  }
+}
