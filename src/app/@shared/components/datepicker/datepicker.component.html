@@ -1,40 +1,47 @@
-<div class="datepicker">
-  <div>Month: {{ selectedMonth + 1 }} | Year: {{ selectedYear }}</div>
+<div class="datepicker" appFocus (onFocus)="setFocus($event)">
+  <label [for]="options?.id" class="datepicker__label" *ngIf="options?.label">{{
+    options?.label
+  }}</label>
+  <input
+    class="datepicker__input"
+    type="text"
+    [formControl]="options?.control"
+    [ngClass]="{
+      'datepicker__input--disabled': isDisabled,
+      'datepicker__input--focused': isFocused,
+      'datepicker__input--invalid': isInvalid
+    }"
+  />
 
-  <button (click)="previousMonth()"><</button>
-  <button (click)="nextMonth()">></button>
-  <div class="datepicker__calendar">
-    <div style="display: flex; justify-content: center; align-items: center">
-      Dom
+  <div class="datepicker__dropdown" *ngIf="isFocused">
+    <div class="datepicker__controller">
+      <div class="datepicker__button" (click)="previousMonth()">
+        <fa-icon [icon]="faAngleLeft"></fa-icon>
+      </div>
+      <div>{{ month | titlecase }} {{ selectedYear }}</div>
+      <div class="datepicker__button" (click)="nextMonth()">
+        <fa-icon [icon]="faAngleRight"></fa-icon>
+      </div>
     </div>
-    <div style="display: flex; justify-content: center; align-items: center">
-      Seg
-    </div>
-    <div style="display: flex; justify-content: center; align-items: center">
-      Ter
-    </div>
-    <div style="display: flex; justify-content: center; align-items: center">
-      Qua
-    </div>
-    <div style="display: flex; justify-content: center; align-items: center">
-      Qui
-    </div>
-    <div style="display: flex; justify-content: center; align-items: center">
-      Sex
-    </div>
-    <div style="display: flex; justify-content: center; align-items: center">
-      Sab
-    </div>
-    <div
-      *ngFor="let date of dates"
-      class="datepicker__day"
-      [ngClass]="{
-        'datepicker__day--selected': isSelectedDate(date),
-        'datepicker__day--disabled': !isFromSelectedMonth(date)
-      }"
-      (click)="onSelectDate(date)"
-    >
-      {{ date?.getDate() }}
+    <div class="datepicker__calendar">
+      <div class="datepicker__weekday" *ngFor="let weekday of weekdays">
+        {{ weekday | titlecase }}
+      </div>
+      <div
+        *ngFor="let date of dates"
+        class="datepicker__day"
+        [ngClass]="{
+          'datepicker__day--selected': isSelectedDate(date),
+          'datepicker__day--disabled': !isFromSelectedMonth(date)
+        }"
+        (click)="onSelectDate(date)"
+      >
+        {{ date?.getDate() }}
+      </div>
     </div>
   </div>
 </div>
+
+<app-error-message
+  [options]="{ control: options?.control }"
+></app-error-message>

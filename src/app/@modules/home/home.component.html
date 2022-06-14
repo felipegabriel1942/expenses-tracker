@@ -49,13 +49,15 @@
     </div>
     <div forContent>
       <div class="margin-bottom">
+        <app-datepicker
+          [options]="datepickerNascimentoOptions()"
+        ></app-datepicker>
+      </div>
+      <div class="margin-bottom">
         <app-input [options]="inputNomePessoaOptions()"></app-input>
       </div>
       <div class="margin-bottom">
         <app-input [options]="inputSalarioPessoaOptions()"></app-input>
-      </div>
-      <div class="margin-bottom">
-        <app-datepicker></app-datepicker>
       </div>
     </div>
   </app-card>

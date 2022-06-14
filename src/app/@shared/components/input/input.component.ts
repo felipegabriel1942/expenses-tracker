@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { InputInterface } from './interface/input.interface';
 import { InputType } from 'src/app/@shared/components/input/enums/input-type.enum';
 
@@ -10,6 +10,8 @@ import { InputType } from 'src/app/@shared/components/input/enums/input-type.enu
 export class InputComponent implements OnInit, OnDestroy {
   @Input() options: InputInterface;
 
+  @Output() onFocus = new EventEmitter<boolean>();
+
   public isFocused = false;
 
   constructor() {}
@@ -20,6 +22,7 @@ export class InputComponent implements OnInit, OnDestroy {
 
   public setFocus(focused: boolean): void {
     this.isFocused = focused && !this.isDisabled;
+    this.onFocus.emit(this.isFocused);
   }
 
   public get isDisabled(): boolean {

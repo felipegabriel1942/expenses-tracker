@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit {
         salario: new FormControl({ value: null, disabled: false }, [
           Validators.required,
         ]),
+        nascimento: new FormControl({ value: new Date(), disabled: false }, [
+          Validators.required,
+        ]),
       }),
     });
 
@@ -116,7 +119,7 @@ export class HomeComponent implements OnInit {
     return {
       id: 'input-nome-pessoa',
       control: this.nomePessoa,
-      label: 'Nome'
+      label: 'Nome',
     };
   }
 
@@ -125,7 +128,15 @@ export class HomeComponent implements OnInit {
       id: 'input-salario-pessoa',
       control: this.salario,
       label: 'Salario',
-      type: InputType.CURRENCY
+      type: InputType.CURRENCY,
+    };
+  }
+
+  public datepickerNascimentoOptions(): InputInterface {
+    return {
+      id: 'datepicker-nascimento-pessoa',
+      control: this.nascimento,
+      label: 'Data de nascimento',
     };
   }
 
@@ -163,5 +174,9 @@ export class HomeComponent implements OnInit {
 
   public get salario(): AbstractControl {
     return this.form.get(['pessoa', 'salario']);
+  }
+
+  public get nascimento(): AbstractControl {
+    return this.form.get(['pessoa', 'nascimento']);
   }
 }

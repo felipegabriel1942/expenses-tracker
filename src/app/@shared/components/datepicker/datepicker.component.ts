@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Weekdays } from './enums/weekdays.enum';
+
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { Months } from './enums/months.enum';
+import { DatepickerInterface } from './interfaces/datepicker.interface';
 
 @Component({
   selector: 'app-datepicker',
@@ -6,17 +11,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./datepicker.component.scss'],
 })
 export class DatepickerComponent implements OnInit {
+  @Input() public options: DatepickerInterface;
+
   public dates: Date[] = [];
   public selectedMonth: number;
   public selectedYear: number;
   public selectedDate: Date;
+  public weekdays: string[] = [];
+  public faAngleLeft = faAngleLeft;
+  public faAngleRight = faAngleRight;
+  public isFocused = false;
 
   constructor() {}
 
   ngOnInit(): void {
     this.selectedMonth = new Date().getMonth();
     this.selectedYear = new Date().getFullYear();
+    this.getWeekdays();
     this.generateDatepickerDates();
+    this.validateDate();
+  }
+
+  private validateDate(): void {
+    this.options.control.valueChanges.subscribe((value) => {
+      if (
+        value != null &&
+        value !== '' &&
+        new Date(value).toString() === 'Invalid Date'
+      ) {
+        this.options.control.setErrors({ invalidDate: true });
+      }
+    });
+  }
+
+  public getWeekdays(): void {
+    this.weekdays = Object.values(Weekdays).filter(
+      (value) => typeof value === 'string'
+    ) as Array<string>;
   }
 
   public nextMonth(): void {
@@ -67,7 +98,9 @@ export class DatepickerComponent implements OnInit {
 
   private getNextMonthDates(): Date[] {
     const nextMonthDates = this.generateNextMonthDates();
-    const numberOfDays = 42 - this.dates.length + this.dates[0].getDay();
+    const totalOfDaysOnCalendar = 42;
+    const numberOfDays =
+      totalOfDaysOnCalendar - this.dates.length + this.dates[0].getDay();
 
     return nextMonthDates.slice(0, numberOfDays);
   }
@@ -112,7 +145,8 @@ export class DatepickerComponent implements OnInit {
     }
 
     this.selectedDate = date;
-    console.log(this.selectedDate);
+    this.options.control.setValue(this.selectedDate);
+    this.setFocus(false);
   }
 
   public isFromSelectedMonth(date: Date): boolean {
@@ -124,5 +158,21 @@ export class DatepickerComponent implements OnInit {
 
   public isSelectedDate(date: Date): boolean {
     return date === this.selectedDate;
+  }
+
+  public setFocus(focused: boolean): void {
+    this.isFocused = focused;
+  }
+
+  public get month(): string {
+    return Object.values(Months)[this.selectedMonth] as string;
+  }
+
+  public get isDisabled(): boolean {
+    return this.options.control.disabled;
+  }
+
+  public get isInvalid(): boolean {
+    return this.options.control.invalid && this.options.control.touched;
   }
 }
