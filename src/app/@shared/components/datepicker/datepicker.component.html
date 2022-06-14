@@ -4,13 +4,13 @@
   }}</label>
   <input
     class="datepicker__input"
-    type="text"
-    [formControl]="options?.control"
+    [formControl]="datepickerControl"
     [ngClass]="{
       'datepicker__input--disabled': isDisabled,
       'datepicker__input--focused': isFocused,
       'datepicker__input--invalid': isInvalid
     }"
+    maxlength="10"
   />
 
   <div class="datepicker__dropdown" *ngIf="isFocused">
@@ -43,5 +43,5 @@
 </div>
 
 <app-error-message
-  [options]="{ control: options?.control }"
+  [options]="{ control: datepickerControl }"
 ></app-error-message>

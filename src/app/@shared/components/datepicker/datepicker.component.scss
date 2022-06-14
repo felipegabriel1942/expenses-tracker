@@ -72,6 +72,11 @@
     align-items: center;
     cursor: pointer;
 
+    &:hover {
+      background-color: var(--color-grey-transparent);
+      border-radius: 3rem;
+    }
+
     &--selected {
       background-color: var(--color-purple);
       border-radius: 3rem;
@@ -82,11 +87,10 @@
     &--disabled {
       color: var(--color-pink-swan);
       cursor: default;
-    }
 
-    &:hover {
-      background-color: var(--color-grey-transparent);
-      border-radius: 3rem;
+      &:hover {
+        background-color: transparent;
+      }
     }
   }
 

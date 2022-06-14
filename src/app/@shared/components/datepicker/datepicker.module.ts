@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from '../../shared.module';
 import { InputModule } from './../input/input.module';
 import { DatepickerComponent } from './datepicker.component';
@@ -9,5 +9,6 @@ import { ErrorMessageModule } from '../error-message';
   declarations: [DatepickerComponent],
   imports: [CommonModule, SharedModule, InputModule, ErrorMessageModule],
   exports: [DatepickerComponent],
+  providers: [DatePipe],
 })
 export class DatepickerModule {}

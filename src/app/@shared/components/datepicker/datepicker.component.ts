@@ -1,3 +1,4 @@
+import { AbstractControl, FormControl } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { Weekdays } from './enums/weekdays.enum';
 
@@ -21,27 +22,69 @@ export class DatepickerComponent implements OnInit {
   public faAngleLeft = faAngleLeft;
   public faAngleRight = faAngleRight;
   public isFocused = false;
+  public datepickerControl: AbstractControl = new FormControl();
 
   constructor() {}
 
   ngOnInit(): void {
-    this.selectedMonth = new Date().getMonth();
-    this.selectedYear = new Date().getFullYear();
+    this.setInitialData();
     this.getWeekdays();
     this.generateDatepickerDates();
-    this.validateDate();
+    this.listenDatepickerControlEvents();
   }
 
-  private validateDate(): void {
-    this.options.control.valueChanges.subscribe((value) => {
-      if (
-        value != null &&
-        value !== '' &&
-        new Date(value).toString() === 'Invalid Date'
-      ) {
-        this.options.control.setErrors({ invalidDate: true });
-      }
+  private setInitialData(): void {
+    this.selectedDate =
+      this.controlValue == null ? new Date() : new Date(this.controlValue);
+
+    this.selectedDate = new Date(this.selectedDate.toDateString());
+    this.selectedMonth = this.selectedDate.getMonth();
+    this.selectedYear = this.selectedDate.getFullYear();
+
+    this.options.control.setValue(this.selectedDate);
+    this.datepickerControl.setValue(
+      this.convertDateToString(this.selectedDate)
+    );
+  }
+
+  private convertDateToString(value: Date): string {
+    const day = value.getDate() < 10 ? `0${value.getDate()}` : value.getDate();
+    const month =
+      value.getMonth() + 1 < 10
+        ? `0${value.getMonth() + 1}`
+        : value.getMonth() + 1;
+
+    return `${day}/${month}/${value.getFullYear()}`;
+  }
+
+  private listenDatepickerControlEvents(): void {
+    this.datepickerControl.valueChanges.subscribe((value) => {
+      this.validateDate(value);
+      this.options.control.setValue(this.convertStringtoDate(value));
     });
+  }
+
+  private convertStringtoDate(value: string): Date {
+    const splittedValue = value.split('/');
+    const day = +splittedValue[0];
+    const month = +splittedValue[1] - 1;
+    const year = +splittedValue[2];
+
+    return new Date(year, month, day);
+  }
+
+  private validateDate(value: string): void {
+    console.log(value);
+
+    if (
+      value != null &&
+      value !== '' &&
+      new Date(value).toString() === 'Invalid Date'
+    ) {
+      console.log('entrou....');
+      this.datepickerControl.setErrors({ invalidDate: true });
+      this.options.control.setErrors({ invalidDate: true });
+    }
   }
 
   public getWeekdays(): void {
@@ -145,7 +188,9 @@ export class DatepickerComponent implements OnInit {
     }
 
     this.selectedDate = date;
-    this.options.control.setValue(this.selectedDate);
+    this.datepickerControl.setValue(
+      this.convertDateToString(this.selectedDate)
+    );
     this.setFocus(false);
   }
 
@@ -157,7 +202,12 @@ export class DatepickerComponent implements OnInit {
   }
 
   public isSelectedDate(date: Date): boolean {
-    return date === this.selectedDate;
+    return (
+      date.getFullYear() === this.selectedDate.getFullYear() &&
+      date.getMonth() === this.selectedDate.getMonth() &&
+      date.getDate() === this.selectedDate.getDate() &&
+      this.selectedMonth === this.selectedDate.getMonth()
+    );
   }
 
   public setFocus(focused: boolean): void {
@@ -169,10 +219,14 @@ export class DatepickerComponent implements OnInit {
   }
 
   public get isDisabled(): boolean {
-    return this.options.control.disabled;
+    return this.datepickerControl.disabled;
   }
 
   public get isInvalid(): boolean {
-    return this.options.control.invalid && this.options.control.touched;
+    return this.datepickerControl.invalid && this.datepickerControl.touched;
+  }
+
+  public get controlValue(): any {
+    return this.options.control.value;
   }
 }
