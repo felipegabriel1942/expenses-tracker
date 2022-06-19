@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
 
     this.form.valueChanges.subscribe((values) => {
       console.log(values);
-      console.log(this.nascimento.errors);
     });
   }
 

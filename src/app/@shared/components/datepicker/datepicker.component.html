@@ -3,13 +3,15 @@
     options?.label
   }}</label>
   <input
+    *ngIf="control"
     class="datepicker__input"
-    [formControl]="datepickerControl"
+    [formControl]="control"
     [ngClass]="{
       'datepicker__input--disabled': isDisabled,
       'datepicker__input--focused': isFocused,
       'datepicker__input--invalid': isInvalid
     }"
+    [value]="formattedDate"
     maxlength="10"
   />
 
@@ -42,6 +44,4 @@
   </div>
 </div>
 
-<app-error-message
-  [options]="{ control: datepickerControl }"
-></app-error-message>
+<app-error-message [options]="{ control: control }"></app-error-message>

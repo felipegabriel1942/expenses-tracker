@@ -8,6 +8,7 @@ import { CheckboxModule } from './../../@shared/components/checkbox/checkbox.mod
 import { SelectModule } from './../../@shared/components/select/select.module';
 import { InputModule } from 'src/app/@shared/components/input';
 import { DatepickerModule } from './../../@shared/components/datepicker/datepicker.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -19,6 +20,7 @@ import { DatepickerModule } from './../../@shared/components/datepicker/datepick
     SelectModule,
     InputModule,
     DatepickerModule,
+    ReactiveFormsModule
   ],
 })
 export class HomeModule {}
