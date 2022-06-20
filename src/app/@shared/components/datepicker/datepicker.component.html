@@ -15,33 +15,11 @@
     maxlength="10"
   />
 
-  <div class="datepicker__dropdown" *ngIf="isFocused">
-    <div class="datepicker__controller">
-      <div class="datepicker__button" (click)="previousMonth()">
-        <fa-icon [icon]="faAngleLeft"></fa-icon>
-      </div>
-      <div>{{ month | titlecase }} {{ selectedYear }}</div>
-      <div class="datepicker__button" (click)="nextMonth()">
-        <fa-icon [icon]="faAngleRight"></fa-icon>
-      </div>
-    </div>
-    <div class="datepicker__calendar">
-      <div class="datepicker__weekday" *ngFor="let weekday of weekdays">
-        {{ weekday | titlecase }}
-      </div>
-      <div
-        *ngFor="let date of dates"
-        class="datepicker__day"
-        [ngClass]="{
-          'datepicker__day--selected': isSelectedDate(date),
-          'datepicker__day--disabled': !isFromSelectedMonth(date)
-        }"
-        (click)="onSelectDate(date)"
-      >
-        {{ date?.getDate() }}
-      </div>
-    </div>
-  </div>
-</div>
+  <app-calendar
+    *ngIf="isFocused"
+    [selectedDate]="selectedDate"
+    (onChange)="setDate($event)"
+  ></app-calendar>
 
-<app-error-message [options]="{ control: control }"></app-error-message>
+  <app-error-message [options]="{ control: control }"></app-error-message>
+</div>

@@ -1,0 +1,27 @@
+<div class="calendar">
+  <div class="calendar__controller">
+    <div class="calendar__button" (click)="previousMonth()">
+      <fa-icon [icon]="faAngleLeft"></fa-icon>
+    </div>
+    <div>{{ month | titlecase }} {{ selectedYear }}</div>
+    <div class="calendar__button" (click)="nextMonth()">
+      <fa-icon [icon]="faAngleRight"></fa-icon>
+    </div>
+  </div>
+  <div class="calendar__body">
+    <div class="calendar__weekday" *ngFor="let weekday of weekdays">
+      {{ weekday | titlecase }}
+    </div>
+    <div
+      *ngFor="let date of dates"
+      class="calendar__day"
+      [ngClass]="{
+        'calendar__day--selected': isSelectedDate(date),
+        'calendar__day--disabled': !isFromSelectedMonth(date)
+      }"
+      (click)="onSelectDate(date)"
+    >
+      {{ date?.getDate() }}
+    </div>
+  </div>
+</div>

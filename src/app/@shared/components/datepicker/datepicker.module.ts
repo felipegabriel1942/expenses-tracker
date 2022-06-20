@@ -4,9 +4,10 @@ import { SharedModule } from '../../shared.module';
 import { InputModule } from './../input/input.module';
 import { DatepickerComponent } from './datepicker.component';
 import { ErrorMessageModule } from '../error-message';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @NgModule({
-  declarations: [DatepickerComponent],
+  declarations: [DatepickerComponent, CalendarComponent],
   imports: [CommonModule, SharedModule, InputModule, ErrorMessageModule],
   exports: [DatepickerComponent],
   providers: [DatePipe],

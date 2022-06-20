@@ -20,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SelectModule,
     InputModule,
     DatepickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class HomeModule {}
