@@ -50,7 +50,9 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.selectedDate?.currentValue) {
-      this.generateDatepickerDates();
+      if (typeof this.selectedDate !== 'string') {
+        this.generateDatepickerDates();
+      }
     }
   }
 
@@ -169,7 +171,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   public isSelectedDate(date: Date): boolean {
-    if (!this.selectedDate) {
+    if (!this.selectedDate || typeof this.selectedDate === 'string') {
       return false;
     }
 

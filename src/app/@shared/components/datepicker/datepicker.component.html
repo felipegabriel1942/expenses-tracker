@@ -1,9 +1,13 @@
-<div class="datepicker" appFocus (onFocus)="setFocus($event)">
+<div
+  class="datepicker"
+  appFocus
+  (onFocus)="isFocused = $event"
+  (onFocus)="formatDateOnFocusLost($event)"
+>
   <label [for]="options?.id" class="datepicker__label" *ngIf="options?.label">{{
     options?.label
   }}</label>
   <input
-    *ngIf="control"
     class="datepicker__input"
     [formControl]="control"
     [ngClass]="{
@@ -18,7 +22,7 @@
   <app-calendar
     *ngIf="isFocused"
     [selectedDate]="selectedDate"
-    (onChange)="setDate($event)"
+    (onChange)="onDateSelected($event)"
   ></app-calendar>
 
   <app-error-message [options]="{ control: control }"></app-error-message>

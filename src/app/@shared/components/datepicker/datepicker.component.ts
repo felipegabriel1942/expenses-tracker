@@ -1,13 +1,11 @@
 import { AbstractControl } from '@angular/forms';
 import {
-  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
   Input,
   OnInit,
 } from '@angular/core';
-import { Months } from './enums/months.enum';
 import { DatepickerInterface } from './interfaces/datepicker.interface';
 
 @Component({
@@ -15,14 +13,9 @@ import { DatepickerInterface } from './interfaces/datepicker.interface';
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.scss'],
 })
-export class DatepickerComponent
-  implements OnInit, AfterViewInit, AfterViewChecked
-{
+export class DatepickerComponent implements OnInit, AfterViewInit {
   @Input() public options: DatepickerInterface;
 
-  public selectedMonth: number;
-  public selectedYear: number;
-  public selectedDate: Date;
   public isFocused = false;
   public formattedDate = '';
 
@@ -31,86 +24,53 @@ export class DatepickerComponent
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.setInitialData();
-    this.listenControlChanges();
+    this.setFormattedDate(this.control.value);
   }
 
-  ngAfterViewChecked(): void {}
-
-  private listenControlChanges(): void {
-    this.control.valueChanges.subscribe((value: string) => {
-      if (value === '' || value == null) {
-        return;
-      }
-
-      if (typeof value === 'string') {
-        this.formattedDate = value;
-        this.control.setValue(new Date(this.format(value)), {
-          emitEvent: false,
-        });
-
-        if (new Date(this.format(value)).toString() !== 'Invalid Date') {
-          this.selectedDate = new Date(this.format(value));
-        }
-      }
-
-      this.selectedMonth = this.selectedDate
-        ? this.selectedDate.getMonth()
-        : new Date().getMonth();
-
-      this.selectedYear = this.selectedDate
-        ? this.selectedDate.getFullYear()
-        : new Date().getFullYear();
-    });
+  public onDateSelected(date: Date): void {
+    this.isFocused = !this.isFocused;
+    this.control.setValue(date);
+    this.setFormattedDate(date);
   }
 
-  private format(value: string): string {
-    const splitted = value.split('/');
-
-    if (value.includes('/')) {
-      return `${splitted[1]}-${splitted[0]}-${splitted[2]}`;
-    } else if (!value.includes('/') && value.length === 8) {
-      return `${value.substring(2, 4)}-${value.substring(
-        0,
-        2
-      )}-${value.substring(4, 8)}`;
+  public formatDateOnFocusLost(isFocused: boolean): void {
+    if (
+      !isFocused &&
+      typeof this.control.value === 'string' &&
+      this.control.value != null &&
+      this.control.value !== ''
+    ) {
+      this.control.setValue(this.convertStringToDate(this.control.value));
+      this.setFormattedDate(this.control.value);
     }
-
-    return value;
   }
 
-  private setInitialData(): void {
-    if (this.control.value) {
-      this.selectedDate = new Date(new Date(this.control.value).toDateString());
-      this.formattedDate = this.convertDateToString(this.selectedDate);
-    }
-
-    const value = this.control.value;
-
-    if (value === '' || value == null) {
-      return;
-    }
-
+  private setFormattedDate(value: string | Date): void {
     if (typeof value === 'string') {
-      this.formattedDate = value;
-      this.control.setValue(new Date(this.format(value)), {
-        emitEvent: false,
-      });
-    } else {
       this.formattedDate = this.convertDateToString(
-        new Date(this.control.value)
+        this.convertStringToDate(value)
       );
+    } else {
+      this.formattedDate = this.convertDateToString(value);
     }
-
-    this.selectedMonth = this.selectedDate
-      ? this.selectedDate.getMonth()
-      : new Date().getMonth();
-
-    this.selectedYear = this.selectedDate
-      ? this.selectedDate.getFullYear()
-      : new Date().getFullYear();
 
     this.changeDetection.detectChanges();
+  }
+
+  private convertStringToDate(value: string): Date {
+    let day, month, year;
+
+    if (value.includes('/')) {
+      day = value.substring(0, 2);
+      month = value.substring(3, 5);
+      year = value.substring(6, 10);
+    } else if (!value.includes('/') && value.length === 8) {
+      day = value.substring(0, 2);
+      month = value.substring(2, 4);
+      year = value.substring(4, 8);
+    }
+
+    return new Date(+year, +month - 1, +day);
   }
 
   private convertDateToString(value?: Date): string {
@@ -119,56 +79,13 @@ export class DatepickerComponent
     }
 
     const day = value.getDate() < 10 ? `0${value.getDate()}` : value.getDate();
+
     const month =
       value.getMonth() + 1 < 10
         ? `0${value.getMonth() + 1}`
         : value.getMonth() + 1;
 
     return `${day}/${month}/${value.getFullYear()}`;
-  }
-
-  public setDate(date: Date): void {
-    this.selectedDate = date;
-    this.options.control.setValue(date);
-    this.setFocus(false);
-  }
-
-  public isFromSelectedMonth(date: Date): boolean {
-    return (
-      date.getMonth() === this.selectedMonth &&
-      date.getFullYear() === this.selectedYear
-    );
-  }
-
-  public isSelectedDate(date: Date): boolean {
-    if (!this.selectedDate) {
-      return false;
-    }
-
-    return (
-      date.getFullYear() === this.selectedDate.getFullYear() &&
-      date.getMonth() === this.selectedDate.getMonth() &&
-      date.getDate() === this.selectedDate.getDate() &&
-      this.selectedMonth === this.selectedDate.getMonth()
-    );
-  }
-
-  public setFocus(focused: boolean): void {
-    this.isFocused = focused;
-
-    if (
-      !this.isFocused &&
-      this.control.value !== '' &&
-      this.control.value != null
-    ) {
-      this.formattedDate = this.convertDateToString(
-        new Date(this.control.value)
-      );
-    }
-  }
-
-  public get month(): string {
-    return Object.values(Months)[this.selectedMonth] as string;
   }
 
   public get isDisabled(): boolean {
@@ -181,5 +98,21 @@ export class DatepickerComponent
 
   public get control(): AbstractControl {
     return this.options.control;
+  }
+
+  public get selectedDate(): Date {
+    return this.control.value;
+  }
+
+  public get selectedMonth(): number {
+    return this.selectedDate
+      ? this.selectedDate.getMonth()
+      : new Date().getMonth();
+  }
+
+  public get selectedYear(): number {
+    return this.selectedDate
+      ? this.selectedDate.getFullYear()
+      : new Date().getFullYear();
   }
 }
