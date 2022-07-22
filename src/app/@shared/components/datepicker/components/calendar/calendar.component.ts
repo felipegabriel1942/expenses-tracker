@@ -25,32 +25,30 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
 
   public faAngleLeft = faAngleLeft;
   public faAngleRight = faAngleRight;
-  public selectedMonth: number;
-  public selectedYear: number;
   public weekdays: string[] = [];
   public dates: Date[] = [];
+  public currentMonth: number;
+  public currentYear: number;
 
   constructor(private readonly changeDetection: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
+    this.currentMonth = this.selectedMonth;
+    this.currentYear = this.selectedYear;
     this.getWeekdays();
-    this.selectedMonth = this.selectedDate
-      ? this.selectedDate.getMonth()
-      : new Date().getMonth();
-
-    this.selectedYear = this.selectedDate
-      ? this.selectedDate.getFullYear()
-      : new Date().getFullYear();
-
     this.generateDatepickerDates();
     this.changeDetection.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.selectedDate?.currentValue) {
-      if (typeof this.selectedDate !== 'string') {
+      console.log(this.selectedDate.toString() !== 'Invalid Date');
+      if (
+        typeof this.selectedDate !== 'string' &&
+        this.selectedDate.toString() !== 'Invalid Date'
+      ) {
         this.generateDatepickerDates();
       }
     }
@@ -63,22 +61,22 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   public nextMonth(): void {
-    if (this.selectedMonth + 1 > 11) {
-      this.selectedMonth = 0;
-      this.selectedYear++;
+    if (this.currentMonth + 1 > 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
     } else {
-      this.selectedMonth++;
+      this.currentMonth++;
     }
 
     this.generateDatepickerDates();
   }
 
   public previousMonth(): void {
-    if (this.selectedMonth - 1 < 0) {
-      this.selectedMonth = 11;
-      this.selectedYear--;
+    if (this.currentMonth - 1 < 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
     } else {
-      this.selectedMonth--;
+      this.currentMonth--;
     }
 
     this.generateDatepickerDates();
@@ -122,23 +120,23 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private getActualMonthDates(): Date[] {
-    return this.createDates(this.selectedYear, this.selectedMonth);
+    return this.createDates(this.currentYear, this.currentMonth);
   }
 
   private generatePreviousMonthDates(): Date[] {
     const year =
-      this.selectedMonth - 1 < 0 ? this.selectedYear - 1 : this.selectedYear;
+      this.currentMonth - 1 < 0 ? this.currentYear - 1 : this.currentYear;
 
-    const month = this.selectedMonth - 1 < 0 ? 11 : this.selectedMonth - 1;
+    const month = this.currentMonth - 1 < 0 ? 11 : this.currentMonth - 1;
 
     return this.createDates(year, month);
   }
 
   private generateNextMonthDates(): Date[] {
     const year =
-      this.selectedMonth + 1 > 11 ? this.selectedYear + 1 : this.selectedYear;
+      this.currentMonth + 1 > 11 ? this.currentYear + 1 : this.currentYear;
 
-    const month = this.selectedMonth + 1 > 11 ? 0 : this.selectedMonth + 1;
+    const month = this.currentMonth + 1 > 11 ? 0 : this.currentMonth + 1;
 
     return this.createDates(year, month);
   }
@@ -156,17 +154,17 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   public onSelectDate(date: Date): void {
-    if (!this.isFromSelectedMonth(date)) {
+    if (!this.isFromCurrentMonth(date)) {
       return;
     }
 
     this.onChange.emit(date);
   }
 
-  public isFromSelectedMonth(date: Date): boolean {
+  public isFromCurrentMonth(date: Date): boolean {
     return (
-      date.getMonth() === this.selectedMonth &&
-      date.getFullYear() === this.selectedYear
+      date.getMonth() === this.currentMonth &&
+      date.getFullYear() === this.currentYear
     );
   }
 
@@ -179,11 +177,23 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
       date.getFullYear() === this.selectedDate.getFullYear() &&
       date.getMonth() === this.selectedDate.getMonth() &&
       date.getDate() === this.selectedDate.getDate() &&
-      this.selectedMonth === this.selectedDate.getMonth()
+      this.currentMonth === this.selectedDate.getMonth()
     );
   }
 
   public get month(): string {
-    return Object.values(Months)[this.selectedMonth] as string;
+    return Object.values(Months)[this.currentMonth] as string;
+  }
+
+  public get selectedMonth(): number {
+    return this.selectedDate && this.selectedDate.toString() !== 'Invalid Date'
+      ? this.selectedDate.getMonth()
+      : new Date().getMonth();
+  }
+
+  public get selectedYear(): number {
+    return this.selectedDate && this.selectedDate.toString() !== 'Invalid Date'
+      ? this.selectedDate.getFullYear()
+      : new Date().getFullYear();
   }
 }

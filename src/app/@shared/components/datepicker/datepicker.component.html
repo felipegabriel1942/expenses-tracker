@@ -2,7 +2,7 @@
   class="datepicker"
   appFocus
   (onFocus)="isFocused = $event"
-  (onFocus)="formatDateOnFocusLost($event)"
+  (onFocus)="onFocusLost($event)"
 >
   <label [for]="options?.id" class="datepicker__label" *ngIf="options?.label">{{
     options?.label

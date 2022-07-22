@@ -44,9 +44,9 @@ export class HomeComponent implements OnInit {
       }),
     });
 
-    this.form.valueChanges.subscribe((values) => {
-      console.log(values);
-    });
+    // this.form.valueChanges.subscribe((values) => {
+    //   console.log(values);
+    // });
   }
 
   public checkboxExpensesOptions(): CheckboxInterface {
