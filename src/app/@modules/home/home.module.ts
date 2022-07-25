@@ -1,3 +1,4 @@
+import { SnackbarModule } from './../../@shared/components/snackbar/snackbar.module';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { NgModule } from '@angular/core';
@@ -21,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     InputModule,
     DatepickerModule,
     ReactiveFormsModule,
+    SnackbarModule
   ],
 })
 export class HomeModule {}

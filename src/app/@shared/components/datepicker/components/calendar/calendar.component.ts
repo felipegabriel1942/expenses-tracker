@@ -44,7 +44,6 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.selectedDate?.currentValue) {
-      console.log(this.selectedDate.toString() !== 'Invalid Date');
       if (
         typeof this.selectedDate !== 'string' &&
         this.selectedDate.toString() !== 'Invalid Date'

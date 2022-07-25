@@ -8,8 +8,10 @@ import {
 import { InputType } from 'src/app/@shared/components/input/enums/input-type.enum';
 import { InputInterface } from 'src/app/@shared/components/input/interface/input.interface';
 import { SelectInterface } from 'src/app/@shared/components/select/interfaces/select.inteface';
+import { SnackbarType } from 'src/app/@shared/components/snackbar/enums/snackbar-type.enum';
 
 import { CheckboxInterface } from './../../@shared/components/checkbox/interface/checkbox.interface';
+import { SnackbarService } from './../../@shared/components/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,7 @@ export class HomeComponent implements OnInit {
   form: FormGroup;
   selectOptions: SelectInterface;
 
-  constructor() {}
+  constructor(private readonly snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -140,6 +142,17 @@ export class HomeComponent implements OnInit {
       control: this.nascimento,
       label: 'Data de nascimento',
     };
+  }
+
+  public showSnackbar(): void {
+    this.snackbarService.show({
+      message: 'Olá snackbar',
+      type: SnackbarType.ERROR,
+    });
+  }
+
+  public hideSnackbar(): void {
+    this.snackbarService.hide();
   }
 
   public disableCarSelects(checked: boolean): void {
