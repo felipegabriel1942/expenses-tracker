@@ -1,0 +1,17 @@
+.button {
+  cursor: pointer;
+  color: white;
+  padding: 1.3rem;
+  border-radius: 0.7rem;
+  transition: all 0.2s;
+  margin: 0.5rem;
+  display: inline-flex;
+  box-shadow: 0.2rem 0.3rem 0.3rem 0rem var(--color-light-grey);
+
+  &:active ,
+  &:focus {
+    outline: none;
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem var(--color-light-grey, 0.2);
+  }
+}

@@ -13,15 +13,15 @@
   justify-content: space-between;
 
   &--alert {
-    background-color: var(--color-alert-snackbar);
+    background-color: var(--color-snackbar-alert);
   }
 
   &--success {
-    background-color: var(--color-success-snackbar);
+    background-color: var(--color-snackbar-success);
   }
 
   &--error {
-    background-color: var(--color-error-snackbar);
+    background-color: var(--color-snackbar-error);
   }
 
   &__close-btn {

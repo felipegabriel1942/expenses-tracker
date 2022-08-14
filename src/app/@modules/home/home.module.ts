@@ -1,3 +1,4 @@
+import { ButtonModule } from './../../@shared/components/button/button.module';
 import { SnackbarModule } from './../../@shared/components/snackbar/snackbar.module';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     InputModule,
     DatepickerModule,
     ReactiveFormsModule,
-    SnackbarModule
+    SnackbarModule,
+    ButtonModule
   ],
 })
 export class HomeModule {}

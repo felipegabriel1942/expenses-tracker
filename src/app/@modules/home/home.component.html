@@ -64,11 +64,23 @@
 
   <app-card>
     <div forHeader>
+      <p class="card-title">Buttons</p>
+    </div>
+    <div forContent>
+      <app-button [options]="btnPrimaryOptions()"></app-button>
+      <app-button [options]="btnSecondaryOptions()"></app-button>
+      <app-button [options]="btnLoadingOptions()"></app-button>
+    </div>
+  </app-card>
+
+  <app-card>
+    <div forHeader>
       <p class="card-title">Snackbar</p>
     </div>
     <div forContent>
-      <button (click)="showSnackbar()">Show</button>
-      <button (click)="hideSnackbar()">Hide</button>
+      <button (click)="showSuccessSnackbar()">Success</button>
+      <button (click)="showAlertSnackbar()">Alert</button>
+      <button (click)="showErrorSnackbar()">Error</button>
     </div>
   </app-card>
 </div>

@@ -1,3 +1,4 @@
+import { ButtonInterface } from './../../@shared/components/button/interface/button.interface';
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -12,6 +13,7 @@ import { SnackbarType } from 'src/app/@shared/components/snackbar/enums/snackbar
 
 import { CheckboxInterface } from './../../@shared/components/checkbox/interface/checkbox.interface';
 import { SnackbarService } from './../../@shared/components/snackbar/snackbar.service';
+import { ButtonColorEnum } from 'src/app/@shared/components/button/enums/button-color.enum';
 
 @Component({
   selector: 'app-home',
@@ -144,19 +146,52 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  public showSnackbar(): void {
+  public showSuccessSnackbar(): void {
     this.snackbarService.show({
-      message: 'Olá snackbar',
+      message: 'Cadastro realizado com sucesso!',
+      type: SnackbarType.SUCCESS,
+    });
+  }
+
+  public showErrorSnackbar(): void {
+    this.snackbarService.show({
+      message: 'Erro ao realizar cadastro, tente novamente mais tarde!',
       type: SnackbarType.ERROR,
     });
   }
 
-  public hideSnackbar(): void {
-    this.snackbarService.hide();
+  public showAlertSnackbar(): void {
+    this.snackbarService.show({
+      message: 'Preencha todos os campos obrigatórios!',
+      type: SnackbarType.ALERT,
+    });
   }
 
   public disableCarSelects(checked: boolean): void {
     checked ? this.cars.disable() : this.cars.enable();
+  }
+
+  public btnPrimaryOptions(): ButtonInterface {
+    return {
+      id: 'btn-primary',
+      text: 'Primary',
+    };
+  }
+
+  public btnSecondaryOptions(): ButtonInterface {
+    return {
+      id: 'btn-secondary',
+      text: 'Secondary',
+      color: ButtonColorEnum.SECONDARY,
+    };
+  }
+
+  public btnLoadingOptions(): ButtonInterface {
+    return {
+      id: 'btn-loading',
+      text: 'Loading',
+      color: ButtonColorEnum.SECONDARY,
+    };
   }
 
   public get expenses(): AbstractControl {
