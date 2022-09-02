@@ -126,6 +126,9 @@
   },
   "defaultProject": "expenses-tracker",
   "cli": {
+    "cache": {
+      "enabled": false
+    },
     "analytics": "476cc26a-5abe-40be-a55a-cce5ac246408"
   }
 }
