@@ -1,0 +1,59 @@
+<p-panel styleClass="mt-2">
+  <ng-template pTemplate="header">
+    <h3>Transações</h3>
+
+    <p-checkbox
+      binary="true"
+      [formControl]="form.controls['expense']"
+      (onChange)="onFilterChange.emit()"
+    ></p-checkbox>
+    <label>Despesas</label>
+
+    <p-checkbox
+      binary="true"
+      [formControl]="form.controls['revenue']"
+      (onChange)="onFilterChange.emit()"
+    ></p-checkbox>
+    <label>Receitas</label>
+
+    <button
+      pButton
+      type="button"
+      label="Adicionar"
+      (click)="onAddTransactionClick.emit()"
+    ></button>
+  </ng-template>
+  <p-table
+    [value]="transactionsPage?.content"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="transactionsPage?.totalOfElements"
+    [first]="page?.value * elementsPerPage?.value"
+    (onLazyLoad)="changePage($event)"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Descrição</th>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+        <th>Categoria</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-transaction>
+      <tr>
+        <td>{{ transaction?.description }}</td>
+        <td>{{ transaction?.creationDate | date: "dd/MM/yyyy" }}</td>
+        <td>{{ transaction?.value | currency: "R$" }}</td>
+        <td>{{ transaction?.type?.description }}</td>
+        <td>{{ transaction?.category?.description }}</td>
+        <td (click)="onDeleteClick.emit(transaction)">x</td>
+        <td (click)="onEditClick.emit(transaction)">e</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>

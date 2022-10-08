@@ -1,0 +1,11 @@
+<div class="grid mt-2">
+  <div class="col">
+    <p-panel header="Despesas"> {{ expense | currency: "R$"}} </p-panel>
+  </div>
+  <div class="col">
+    <p-panel header="Receitas"> {{ revenue | currency: "R$"}}</p-panel>
+  </div>
+  <div class="col">
+    <p-panel header="Resultado"> {{ revenue - expense | currency: "R$"}}</p-panel>
+  </div>
+</div>

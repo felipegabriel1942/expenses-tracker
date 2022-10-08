@@ -1,5 +1,60 @@
+<p-panel header="Periodo">
+  <div [formGroup]="paramsForm">
+    <p-calendar
+      formControlName="period"
+      view="month"
+      dateFormat="mm/yy"
+      (onSelect)="loadTransactions()"
+      (onSelect)="loadSummaries()"
+      (onSelect)="loadExpenseSummaries()"
+    ></p-calendar>
+  </div>
+</p-panel>
 
-<span class="p-float-label">
-  <input id="float-input" type="text" pInputText>
-  <label for="float-input">Username</label>
-</span>
+<app-transaction-summary
+  [summaries]="summaries$ | async"
+></app-transaction-summary>
+
+<app-transaction-chart
+  [expenseSummaries]="expenseSummaries$ | async"
+></app-transaction-chart>
+
+<app-transaction-list
+  [transactionsPage]="transactionsPage$ | async"
+  [form]="paramsForm"
+  (onAddTransactionClick)="openTransactionForm()"
+  (onPageChange)="loadTransactions()"
+  (onFilterChange)="loadTransactions()"
+  (onDeleteClick)="openDeleteConfimation($event)"
+  (onEditClick)="editTransaction($event)"
+></app-transaction-list>
+
+<p-dialog
+  [(visible)]="transactionFormIsOpen"
+  [modal]="true"
+  (onHide)="resetTransactionForm()"
+>
+  <app-transaction-form
+    [form]="transactionForm"
+    [categories]="categories$ | async"
+    [types]="types$ | async"
+  ></app-transaction-form>
+  <button
+    pButton
+    type="button"
+    label="Salvar"
+    (click)="salvar()"
+    [disabled]="transactionForm?.invalid"
+  ></button>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteConfirmationIsOpen" [modal]="true">
+  Deseja realmente excluir esta transação?
+
+  <button
+    pButton
+    type="button"
+    label="Confirmar"
+    (click)="deleteTransaction()"
+  ></button>
+</p-dialog>

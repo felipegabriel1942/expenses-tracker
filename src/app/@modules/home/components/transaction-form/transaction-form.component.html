@@ -1,0 +1,50 @@
+<div [formGroup]="form">
+  <span class="p-float-label mt-2">
+    <input
+      id="description-input"
+      type="text"
+      pInputText
+      formControlName="description"
+    />
+    <label for="description-input">Descrição</label>
+    <small
+      class="p-error block"
+      *ngIf="description?.invalid && description?.touched"
+      >Campo obrigatório.</small
+    >
+  </span>
+
+  <span class="p-float-label mt-2">
+    <p-calendar
+      formControlName="creationDate"
+      appendTo="body"
+      dateFormat="dd/mm/yy"
+    ></p-calendar>
+    <label for="float-input">Data</label>
+  </span>
+
+  <span class="p-float-label mt-2">
+    <p-inputNumber formControlName="value" mode="decimal"></p-inputNumber>
+    <label for="float-input">Valor</label>
+  </span>
+
+  <span class="p-float-label mt-2">
+    <p-dropdown
+      [options]="types"
+      formControlName="type"
+      optionLabel="description"
+      appendTo="body"
+    ></p-dropdown>
+    <label for="float-input">Tipo</label>
+  </span>
+
+  <span class="p-float-label mt-2 w-100">
+    <p-dropdown
+      [options]="categories"
+      formControlName="category"
+      optionLabel="description"
+      appendTo="body"
+    ></p-dropdown>
+    <label for="float-input">Categoria</label>
+  </span>
+</div>
