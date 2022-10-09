@@ -1,3 +1,4 @@
+import { CoreModule } from './@core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -17,6 +18,7 @@ import { MessageService } from 'primeng/api';
     BrowserAnimationsModule,
     HttpClientModule,
     ToastModule,
+    CoreModule
   ],
   bootstrap: [AppComponent],
   providers: [MessageService],

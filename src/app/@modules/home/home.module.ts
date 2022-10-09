@@ -13,6 +13,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { ChartModule } from 'primeng/chart';
+import { BadgeModule } from 'primeng/badge';
 
 import { HomeRoutingModule } from './home-routing.module';
 
@@ -45,7 +46,8 @@ import { TransactionChartComponent } from './components/transaction-chart/transa
     InputNumberModule,
     InputNumberModule,
     ToastModule,
-    ChartModule
+    ChartModule,
+    BadgeModule
   ],
 })
 export class HomeModule {}

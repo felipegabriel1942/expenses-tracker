@@ -4,6 +4,8 @@
       formControlName="period"
       view="month"
       dateFormat="mm/yy"
+      [style]="{ width: '100%' }"
+      [inputStyle]="{ width: '100%' }"
       (onSelect)="loadTransactions()"
       (onSelect)="loadSummaries()"
       (onSelect)="loadExpenseSummaries()"
@@ -43,8 +45,11 @@
     pButton
     type="button"
     label="Salvar"
-    (click)="salvar()"
+    icon="pi pi-save"
+    class="p-button-warning mt-2 p-button-rounded"
+    [style]="{ width: '100%' }"
     [disabled]="transactionForm?.invalid"
+    (click)="salvar()"
   ></button>
 </p-dialog>
 

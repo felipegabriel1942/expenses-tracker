@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
+import { IC_EXPENSE, IC_PROFITS, IC_SALARY } from './../../../../consts/assets';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -8,6 +9,10 @@ import { Summaries } from 'src/app/@models/transaction-summary.model';
 })
 export class TransactionSummaryComponent implements OnInit {
   @Input() summaries: Summaries;
+
+  public IC_EXPENSE = IC_EXPENSE;
+  public IC_PROFITS = IC_PROFITS;
+  public IC_SALARY = IC_SALARY;
 
   constructor() {}
 

@@ -1,3 +1,4 @@
+import { IC_ONLINE_PAYMENT, IC_NO_RESULTS } from './../../../../consts/assets';
 import { Component, Input, OnInit } from '@angular/core';
 
 import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
@@ -9,9 +10,11 @@ import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
 })
 export class TransactionChartComponent implements OnInit {
   @Input() set expenseSummaries(summaries: ExpenseSummaries) {
-    if (summaries) {
+    this.summaries = summaries;
+
+    if (this.summaries) {
       this.data = {
-        labels: [...summaries.map((e) => e.category)],
+        labels: [...this.summaries.map((e) => e.category)],
         datasets: [
           {
             backgroundColor: [
@@ -23,15 +26,17 @@ export class TransactionChartComponent implements OnInit {
               '#FFCA28',
               '#26A69A',
             ],
-            data: [...summaries.map((e) => e.total)],
+            data: [...this.summaries.map((e) => e.total)],
           },
         ],
       };
     }
   }
 
-  data: any;
-  options: any;
+  public data: any;
+  public options: any;
+  public summaries: ExpenseSummaries;
+  public IC_NO_RESULTS = IC_NO_RESULTS;
 
   constructor() {}
 
@@ -44,5 +49,9 @@ export class TransactionChartComponent implements OnInit {
         },
       },
     };
+  }
+
+  get summariesEmpty(): boolean {
+    return this.summaries?.length === 0;
   }
 }

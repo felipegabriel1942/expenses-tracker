@@ -1,28 +1,38 @@
 <p-panel styleClass="mt-2">
-  <ng-template pTemplate="header">
-    <h3>Transações</h3>
+  <div class="grid">
+    <div class="col-6"><h3>Transações</h3></div>
+    <div class="col-4 flex align-content-center">
+      <p-checkbox
+        binary="true"
+        [formControl]="form.controls['expense']"
+        class="mr-2"
+        (onChange)="onFilterChange.emit()"
+      ></p-checkbox>
+      <label class="flex align-items-center justify-content-center mr-4"
+        >Despesas</label
+      >
+      <p-checkbox
+        binary="true"
+        [formControl]="form.controls['revenue']"
+        class="mr-2"
+        (onChange)="onFilterChange.emit()"
+      ></p-checkbox>
+      <label class="flex align-items-center justify-content-center"
+        >Receitas</label
+      >
+    </div>
+    <div class="col-2">
+      <button
+        pButton
+        type="button"
+        label="Adicionar"
+        icon="pi pi-plus"
+        class="p-button-warning p-button-rounded"
+        (click)="onAddTransactionClick.emit()"
+      ></button>
+    </div>
+  </div>
 
-    <p-checkbox
-      binary="true"
-      [formControl]="form.controls['expense']"
-      (onChange)="onFilterChange.emit()"
-    ></p-checkbox>
-    <label>Despesas</label>
-
-    <p-checkbox
-      binary="true"
-      [formControl]="form.controls['revenue']"
-      (onChange)="onFilterChange.emit()"
-    ></p-checkbox>
-    <label>Receitas</label>
-
-    <button
-      pButton
-      type="button"
-      label="Adicionar"
-      (click)="onAddTransactionClick.emit()"
-    ></button>
-  </ng-template>
   <p-table
     [value]="transactionsPage?.content"
     [lazy]="true"
@@ -41,7 +51,6 @@
         <th>Tipo</th>
         <th>Categoria</th>
         <th></th>
-        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-transaction>
@@ -49,10 +58,37 @@
         <td>{{ transaction?.description }}</td>
         <td>{{ transaction?.creationDate | date: "dd/MM/yyyy" }}</td>
         <td>{{ transaction?.value | currency: "R$" }}</td>
-        <td>{{ transaction?.type?.description }}</td>
+        <td>
+          <i
+            pBadge
+            [value]="transaction?.type?.description"
+            [severity]="setBadgeColor(transaction)"
+          ></i>
+        </td>
         <td>{{ transaction?.category?.description }}</td>
-        <td (click)="onDeleteClick.emit(transaction)">x</td>
-        <td (click)="onEditClick.emit(transaction)">e</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            iconPos="left"
+            class="p-button-outlined p-button-raised p-button-rounded mr-2"
+            (click)="onEditClick.emit(transaction)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-times"
+            iconPos="left"
+            class="p-button-outlined p-button-raised p-button-rounded p-button-danger"
+            (click)="onDeleteClick.emit(transaction)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">Nenhuma transação encontrada para este período.</td>
       </tr>
     </ng-template>
   </p-table>

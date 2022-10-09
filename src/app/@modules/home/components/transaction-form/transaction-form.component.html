@@ -33,17 +33,19 @@
       [options]="types"
       formControlName="type"
       optionLabel="description"
+      [style]="{ width: '100%' }"
       appendTo="body"
     ></p-dropdown>
     <label for="float-input">Tipo</label>
   </span>
 
-  <span class="p-float-label mt-2 w-100">
+  <span class="p-float-label mt-2">
     <p-dropdown
       [options]="categories"
       formControlName="category"
       optionLabel="description"
       appendTo="body"
+      [style]="{ width: '100%' }"
     ></p-dropdown>
     <label for="float-input">Categoria</label>
   </span>

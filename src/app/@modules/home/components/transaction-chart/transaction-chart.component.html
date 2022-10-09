@@ -1,5 +1,14 @@
 <p-panel header="Despesas por categoria">
+  <div class="flex flex-column" *ngIf="summariesEmpty">
+    <div class="flex align-items-center justify-content-center mt-4">
+      <img [src]="IC_NO_RESULTS" height="220" />
+    </div>
+    <div class="flex align-items-center justify-content-center mt-4">
+      <h4>Nenhuma despesa encontrada para este período.</h4>
+    </div>
+  </div>
   <p-chart
+    *ngIf="!summariesEmpty"
     type="doughnut"
     [data]="data"
     [width]="350"

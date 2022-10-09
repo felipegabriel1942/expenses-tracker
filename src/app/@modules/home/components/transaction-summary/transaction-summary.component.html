@@ -1,11 +1,38 @@
-<div class="grid mt-2">
+<div class="grid mt-1">
   <div class="col">
-    <p-panel header="Despesas"> {{ expense | currency: "R$"}} </p-panel>
+    <p-panel header="Despesas"
+      ><div class="grid">
+        <div class="col"><img [src]="IC_EXPENSE" /></div>
+        <div class="col flex align-content-center">
+          <span class="flex align-items-center justify-content-center">{{
+            expense | currency: "R$"
+          }}</span>
+        </div>
+      </div>
+    </p-panel>
   </div>
   <div class="col">
-    <p-panel header="Receitas"> {{ revenue | currency: "R$"}}</p-panel>
+    <p-panel header="Receitas">
+      <div class="grid">
+        <div class="col"><img [src]="IC_PROFITS" /></div>
+        <div class="col flex align-content-center">
+          <span class="flex align-items-center justify-content-center">{{
+            revenue | currency: "R$"
+          }}</span>
+        </div>
+      </div>
+    </p-panel>
   </div>
   <div class="col">
-    <p-panel header="Resultado"> {{ revenue - expense | currency: "R$"}}</p-panel>
+    <p-panel header="Resultado">
+      <div class="grid">
+        <div class="col"><img [src]="IC_SALARY" /></div>
+        <div class="col flex align-content-center">
+          <span class="flex align-items-center justify-content-center">{{
+            revenue - expense | currency: "R$"
+          }}</span>
+        </div>
+      </div>
+    </p-panel>
   </div>
 </div>

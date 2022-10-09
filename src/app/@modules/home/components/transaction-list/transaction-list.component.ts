@@ -1,6 +1,9 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Transactions } from 'src/app/@models/transaction.model';
+import {
+  TransactionModel,
+  Transactions,
+} from 'src/app/@models/transaction.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { LazyLoadEvent } from 'primeng/api';
 
@@ -29,11 +32,33 @@ export class TransactionListComponent implements OnInit {
     this.onPageChange.emit(nextPage);
   }
 
+  public setBadgeColor(transaction: TransactionModel): string {
+    if (this.isExpense(transaction)) {
+      return 'danger';
+    }
+
+    if (this.isRevenue(transaction)) {
+      return 'success';
+    }
+  }
+
+  private isRevenue(transaction: TransactionModel): boolean {
+    return transaction.type.id === 1;
+  }
+
+  private isExpense(transaction: TransactionModel): boolean {
+    return transaction.type.id === 2;
+  }
+
   get page(): AbstractControl {
     return this.form.get('page');
   }
 
   get elementsPerPage(): AbstractControl {
     return this.form.get('elementsPerPage');
+  }
+
+  get listIsEmpty(): boolean {
+    return this.transactionsPage.content.length === 0;
   }
 }
