@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit {
 
   closeTransactionFormDialog(): void {
     this.transactionFormIsOpen = false;
+    this.resetTransactionForm();
   }
 
   loadTransactions(): void {
@@ -132,7 +133,6 @@ export class HomeComponent implements OnInit {
   }
 
   deleteTransaction(transaction: TransactionModel): void {
-    console.log(transaction);
     this.transactionService.deleteTransaction(transaction).subscribe((_) => {
       this.loadTransactions();
       this.loadSummaries();
