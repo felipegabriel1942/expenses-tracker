@@ -13,14 +13,18 @@ import { LazyLoadEvent } from 'primeng/api';
   styleUrls: ['./transaction-list.component.scss'],
 })
 export class TransactionListComponent implements OnInit {
-  @Input() transactionsPage: PageModel<Transactions>;
-  @Input() form: FormGroup;
 
-  @Output() onAddTransactionClick = new EventEmitter();
-  @Output() onPageChange = new EventEmitter();
-  @Output() onEditClick = new EventEmitter();
-  @Output() onDeleteClick = new EventEmitter();
-  @Output() onFilterChange = new EventEmitter();
+  public deleteConfirmationIsOpen = false;
+  public selectedTransaction = new TransactionModel();
+
+  @Input() public transactionsPage: PageModel<Transactions>;
+  @Input() public form: FormGroup;
+
+  @Output() public onAddTransactionClick = new EventEmitter();
+  @Output() public onPageChange = new EventEmitter();
+  @Output() public onEditClick = new EventEmitter();
+  @Output() public onDeleteClick = new EventEmitter();
+  @Output() public onFilterChange = new EventEmitter();
 
   constructor() {}
 
@@ -48,6 +52,17 @@ export class TransactionListComponent implements OnInit {
 
   private isExpense(transaction: TransactionModel): boolean {
     return transaction.type.id === 2;
+  }
+
+  public openDeleteConfimation(transaction: TransactionModel): void {
+    this.selectedTransaction = transaction;
+    this.deleteConfirmationIsOpen = true;
+  }
+
+  public deleteTransaction(): void {
+    this.onDeleteClick.emit(this.selectedTransaction);
+    this.selectedTransaction = new TransactionModel();
+    this.deleteConfirmationIsOpen = false;
   }
 
   get page(): AbstractControl {

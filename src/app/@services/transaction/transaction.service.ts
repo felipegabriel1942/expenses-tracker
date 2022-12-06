@@ -19,7 +19,7 @@ import { Summaries } from 'src/app/@models/transaction-summary.model';
   providedIn: 'root',
 })
 export class TransactionService {
-  private baseApi = 'http://localhost:8080/transaction';
+  private baseApi = 'http://localhost:8081/transaction';
 
   constructor(
     private readonly http: HttpClient,

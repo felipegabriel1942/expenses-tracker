@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { TransactionCategories } from 'src/app/@models/transaction-category.model';
 import { TransactionTypes } from 'src/app/@models/transaction-type.model';
@@ -13,6 +13,10 @@ export class TransactionFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() types: TransactionTypes;
   @Input() categories: TransactionCategories;
+  @Input() isOpen: boolean;
+
+  @Output() onSave = new EventEmitter();
+  @Output() onHide = new EventEmitter();
 
   constructor() { }
 

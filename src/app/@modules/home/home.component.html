@@ -1,4 +1,4 @@
-<p-panel header="Periodo">
+<p-panel header="Período">
   <div [formGroup]="paramsForm">
     <p-calendar
       formControlName="period"
@@ -17,49 +17,22 @@
   [summaries]="summaries$ | async"
 ></app-transaction-summary>
 
-<app-transaction-chart
-  [expenseSummaries]="expenseSummaries$ | async"
-></app-transaction-chart>
+<app-transaction-form
+  [form]="transactionForm"
+  [isOpen]="transactionFormIsOpen"
+  [categories]="categories$ | async"
+  [types]="types$ | async"
+  (onHide)="closeTransactionFormDialog()"
+  (onSave)="saveTransaction()"
+></app-transaction-form>
 
 <app-transaction-list
   [transactionsPage]="transactionsPage$ | async"
   [form]="paramsForm"
-  (onAddTransactionClick)="openTransactionForm()"
+  (onAddTransactionClick)="openTransactionFormDialog()"
   (onPageChange)="loadTransactions()"
   (onFilterChange)="loadTransactions()"
-  (onDeleteClick)="openDeleteConfimation($event)"
+  (onDeleteClick)="deleteTransaction($event)"
   (onEditClick)="editTransaction($event)"
 ></app-transaction-list>
 
-<p-dialog
-  [(visible)]="transactionFormIsOpen"
-  [modal]="true"
-  (onHide)="resetTransactionForm()"
->
-  <app-transaction-form
-    [form]="transactionForm"
-    [categories]="categories$ | async"
-    [types]="types$ | async"
-  ></app-transaction-form>
-  <button
-    pButton
-    type="button"
-    label="Salvar"
-    icon="pi pi-save"
-    class="p-button-warning mt-2 p-button-rounded"
-    [style]="{ width: '100%' }"
-    [disabled]="transactionForm?.invalid"
-    (click)="salvar()"
-  ></button>
-</p-dialog>
-
-<p-dialog [(visible)]="deleteConfirmationIsOpen" [modal]="true">
-  Deseja realmente excluir esta transação?
-
-  <button
-    pButton
-    type="button"
-    label="Confirmar"
-    (click)="deleteTransaction()"
-  ></button>
-</p-dialog>

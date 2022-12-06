@@ -30,8 +30,6 @@ export class HomeComponent implements OnInit {
   expenseSummaries$: Observable<ExpenseSummaries>;
 
   transactionFormIsOpen = false;
-  deleteConfirmationIsOpen = false;
-
   paramsForm: FormGroup;
   transactionForm: FormGroup;
 
@@ -68,22 +66,21 @@ export class HomeComponent implements OnInit {
       expense: new FormControl(true),
       revenue: new FormControl(true),
       page: new FormControl(0),
-      elementsPerPage: new FormControl(10),
+      elementsPerPage: new FormControl(5),
       period: new FormControl(new Date()),
     });
   }
 
-  openTransactionForm(): void {
+  openTransactionFormDialog(): void {
     this.transactionFormIsOpen = true;
   }
 
-  closeTransactionForm(): void {
+  closeTransactionFormDialog(): void {
     this.transactionFormIsOpen = false;
   }
 
   loadTransactions(): void {
     const params = this.paramsForm.value as TransactionParamsModel;
-    console.log(params);
     this.transactionsPage$ = this.transactionService.findTransactions(params);
   }
 
@@ -101,7 +98,7 @@ export class HomeComponent implements OnInit {
     this.types$ = this.transactionService.findTransactionTypes();
   }
 
-  salvar(): void {
+  saveTransaction(): void {
     const transaction = this.transactionForm.value;
 
     const request$ =
@@ -110,7 +107,7 @@ export class HomeComponent implements OnInit {
         : this.transactionService.updateTransaction(transaction);
 
     request$.subscribe((_) => {
-      this.closeTransactionForm();
+      this.closeTransactionFormDialog();
       this.resetParamsForm();
       this.loadTransactions();
       this.loadSummaries();
@@ -134,18 +131,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openDeleteConfimation(transaction: TransactionModel): void {
-    this.transactionForm.patchValue(transaction);
-    this.deleteConfirmationIsOpen = true;
-  }
-
-  deleteTransaction(): void {
-    const transaction = this.transactionForm.value;
-
+  deleteTransaction(transaction: TransactionModel): void {
+    console.log(transaction);
     this.transactionService.deleteTransaction(transaction).subscribe((_) => {
       this.loadTransactions();
       this.loadSummaries();
-      this.deleteConfirmationIsOpen = false;
     });
   }
 
@@ -154,7 +144,7 @@ export class HomeComponent implements OnInit {
     this.transactionForm
       .get('creationDate')
       .setValue(new Date(transaction.creationDate));
-    this.openTransactionForm();
+    this.openTransactionFormDialog();
   }
 
   get page(): AbstractControl {

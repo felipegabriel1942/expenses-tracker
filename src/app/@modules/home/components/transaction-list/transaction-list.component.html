@@ -56,8 +56,8 @@
     <ng-template pTemplate="body" let-transaction>
       <tr>
         <td>{{ transaction?.description }}</td>
-        <td>{{ transaction?.creationDate | date: "dd/MM/yyyy" }}</td>
-        <td>{{ transaction?.value | currency: "R$" }}</td>
+        <td>{{ transaction?.creationDate | date : "dd/MM/yyyy" }}</td>
+        <td>{{ transaction?.value | currency : "R$" }}</td>
         <td>
           <i
             pBadge
@@ -81,7 +81,7 @@
             icon="pi pi-times"
             iconPos="left"
             class="p-button-outlined p-button-raised p-button-rounded p-button-danger"
-            (click)="onDeleteClick.emit(transaction)"
+            (click)="openDeleteConfimation(transaction)"
           ></button>
         </td>
       </tr>
@@ -93,3 +93,14 @@
     </ng-template>
   </p-table>
 </p-panel>
+
+<p-dialog [(visible)]="deleteConfirmationIsOpen" [modal]="true">
+  Deseja realmente excluir esta transação?
+
+  <button
+    pButton
+    type="button"
+    label="Confirmar"
+    (click)="deleteTransaction()"
+  ></button>
+</p-dialog>
