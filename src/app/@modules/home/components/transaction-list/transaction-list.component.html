@@ -1,7 +1,7 @@
 <p-panel styleClass="mt-2">
   <div class="grid">
     <div class="col-6"><h3>Transações</h3></div>
-    <div class="col-4 flex align-content-center">
+    <div class="col-4 flex align-content-center" *ngIf="!isMobile">
       <p-checkbox
         binary="true"
         [formControl]="form.controls['expense']"
@@ -21,7 +21,7 @@
         >Receitas</label
       >
     </div>
-    <div class="col-2">
+    <div class="col-2" *ngIf="!isMobile">
       <button
         pButton
         type="button"
@@ -42,6 +42,7 @@
     [first]="page?.value * elementsPerPage?.value"
     (onLazyLoad)="changePage($event)"
     responsiveLayout="scroll"
+    *ngIf="!isMobile"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -92,6 +93,14 @@
       </tr>
     </ng-template>
   </p-table>
+  <button
+    *ngIf="isMobile"
+    pButton
+    type="button"
+    icon="pi pi-plus"
+    class="p-button-warning p-button-rounded p-button-raised float-button"
+    (click)="onAddTransactionClick.emit()"
+  ></button>
 </p-panel>
 
 <p-dialog [(visible)]="deleteConfirmationIsOpen" [modal]="true">

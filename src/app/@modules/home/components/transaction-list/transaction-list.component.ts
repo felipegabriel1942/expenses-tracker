@@ -6,6 +6,7 @@ import {
 } from 'src/app/@models/transaction.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { LazyLoadEvent } from 'primeng/api';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-transaction-list',
@@ -16,6 +17,7 @@ export class TransactionListComponent implements OnInit {
 
   public deleteConfirmationIsOpen = false;
   public selectedTransaction = new TransactionModel();
+  public isMobile = false;
 
   @Input() public transactionsPage: PageModel<Transactions>;
   @Input() public form: FormGroup;
@@ -26,9 +28,11 @@ export class TransactionListComponent implements OnInit {
   @Output() public onDeleteClick = new EventEmitter();
   @Output() public onFilterChange = new EventEmitter();
 
-  constructor() {}
+  constructor(private deviceService: DeviceDetectorService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   changePage(event: LazyLoadEvent): void {
     const nextPage = event.first / event.rows;

@@ -1,3 +1,12 @@
 p-inputnumber {
   width: 100%;
 }
+
+::ng-deep .mobile-dialog {
+  .p-dialog {
+    .p-dialog-header {
+      border-top-right-radius: 30px;
+      border-top-left-radius: 30px;
+    }
+  }
+}

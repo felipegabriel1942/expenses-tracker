@@ -1,7 +1,12 @@
 <p-dialog
   [(visible)]="isOpen"
   [modal]="true"
-  [style]="{ width: '30vw' }"
+  [style]="{
+    width: !isMobile ? '30vw' : '100vw',
+    margin: !isMobile ? '4px' : 0
+  }"
+  [ngClass]="isMobile ? 'mobile-dialog' : ''"
+  [position]="!isMobile ? 'center' : 'bottom'"
   (onHide)="onHide.emit()"
 >
   <div [formGroup]="form">
