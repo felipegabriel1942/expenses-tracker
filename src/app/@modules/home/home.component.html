@@ -6,9 +6,9 @@
       dateFormat="mm/yy"
       [style]="{ width: '100%' }"
       [inputStyle]="{ width: '100%' }"
-      (onSelect)="loadTransactions()"
-      (onSelect)="loadSummaries()"
-      (onSelect)="loadExpenseSummaries()"
+      (onSelect)="findTransactions()"
+      (onSelect)="findSummaries()"
+      (onSelect)="findExpenseSummaries()"
     ></p-calendar>
   </div>
 </p-panel>
@@ -20,8 +20,7 @@
 <app-transaction-form
   [form]="transactionForm"
   [isOpen]="transactionFormIsOpen"
-  [categories]="categories$ | async"
-  [types]="types$ | async"
+  [transactionCategories]="transactionCategories$ | async"
   (onHide)="closeTransactionFormDialog()"
   (onSave)="saveTransaction()"
 ></app-transaction-form>
@@ -30,8 +29,8 @@
   [transactionsPage]="transactionsPage$ | async"
   [form]="paramsForm"
   (onAddTransactionClick)="openTransactionFormDialog()"
-  (onPageChange)="loadTransactions()"
-  (onFilterChange)="loadTransactions()"
+  (onPageChange)="findTransactions()"
+  (onFilterChange)="findTransactions()"
   (onDeleteClick)="deleteTransaction($event)"
   (onEditClick)="editTransaction($event)"
 ></app-transaction-list>

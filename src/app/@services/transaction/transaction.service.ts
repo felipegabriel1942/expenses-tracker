@@ -1,4 +1,4 @@
-import { ExpenseSummaries } from './../../@models/expense-summary.model';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ import { TransactionCategoryModel } from 'src/app/@models/transaction-category.m
 import { TransactionTypeModel } from 'src/app/@models/transaction-type.model';
 import { MessageService } from 'primeng/api';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
+import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
 
 @Injectable({
   providedIn: 'root',
@@ -46,12 +47,10 @@ export class TransactionService {
       );
   }
 
-  findTransactionCategories(
-    transactionTypeId: number
-  ): Observable<TransactionCategoryModel> {
+  findTransactionCategories(): Observable<TransactionCategoryModel> {
     return this.http
       .get<ApiResponse<TransactionCategoryModel>>(
-        `${this.baseApi}/categories?transactionTypeId=${transactionTypeId}`
+        `${this.baseApi}/categories`
       )
       .pipe(
         map((res: ApiResponse<TransactionCategoryModel>) => {

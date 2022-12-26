@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
-import { IC_EXPENSE, IC_PROFITS, IC_SALARY } from './../../../../consts/assets';
+import { IC_EXPENSE, IC_PROFITS, IC_SALARY } from 'src/app/consts';
+
 
 @Component({
   selector: 'app-transaction-summary',

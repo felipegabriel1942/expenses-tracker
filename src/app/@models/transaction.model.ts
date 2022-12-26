@@ -1,13 +1,13 @@
+import { TransactionTypeEnum } from '../@enums/transaction-type.enum';
 import { TransactionCategoryModel } from './transaction-category.model';
-import { TransactionTypeModel } from './transaction-type.model';
 
 export class TransactionModel {
   id: number;
   description: string;
   value: number;
   creationDate: Date;
-  type: TransactionTypeModel;
-  category: TransactionCategoryModel;
+  transactionType: TransactionTypeEnum;
+  transactionCategory: TransactionCategoryModel;
   user: number;
 }
 

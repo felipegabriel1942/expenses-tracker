@@ -62,11 +62,11 @@
         <td>
           <i
             pBadge
-            [value]="transaction?.type?.description"
+            [value]="transaction?.transactionType"
             [severity]="setBadgeColor(transaction)"
           ></i>
         </td>
-        <td>{{ transaction?.category?.description }}</td>
+        <td>{{ transaction?.transactionCategory?.description }}</td>
         <td>
           <button
             pButton

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -13,10 +13,10 @@ import {
 import { TransactionService } from 'src/app/@services/transaction/transaction.service';
 import { TransactionParamsModel } from 'src/app/@models/transaction-params.mode';
 import { TransactionCategoryModel } from 'src/app/@models/transaction-category.model';
-import { TransactionTypeModel } from 'src/app/@models/transaction-type.model';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
 import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
 import { PageModel } from 'src/app/@models/page.model';
+import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,45 +24,42 @@ import { PageModel } from 'src/app/@models/page.model';
 })
 export class HomeComponent implements OnInit {
   transactionsPage$: Observable<PageModel<Transactions>>;
-  categories$: Observable<TransactionCategoryModel>;
-  types$: Observable<TransactionTypeModel>;
+  transactionCategories$: Observable<TransactionCategoryModel>;
   summaries$: Observable<Summaries>;
   expenseSummaries$: Observable<ExpenseSummaries>;
 
   transactionFormIsOpen = false;
+
+  // TODO: MUDAR PARA NOME QUE FAÇA MAIS SENTIDO, COMO FILTER_FORM.
   paramsForm: FormGroup;
   transactionForm: FormGroup;
 
-  constructor(private readonly transactionService: TransactionService) {}
+  constructor(
+    private readonly transactionService: TransactionService
+  ) {}
 
   ngOnInit(): void {
-    this.buildTransactionForm();
-    this.buildParamsForm();
-    this.loadTypes();
-    this.loadSummaries();
-    this.loadExpenseSummaries();
-    this.loadTransactions();
+    this.transactionForm = this.createTransactionForm();
+    this.paramsForm = this.createParamsForm();
+    this.findSummaries();
+    this.findExpenseSummaries();
+    this.findTransactions();
+    this.findCategories();
   }
 
-  buildTransactionForm(): void {
-    this.transactionForm = new FormGroup({
+  createTransactionForm(): FormGroup {
+    return new FormGroup({
       description: new FormControl(null, Validators.required),
       creationDate: new FormControl(new Date(), Validators.required),
       value: new FormControl(null, Validators.required),
-      category: new FormControl(null, Validators.required),
-      type: new FormControl(null, Validators.required),
+      transactionCategory: new FormControl(null, Validators.required),
+      transactionType: new FormControl(TransactionTypeEnum.EXPENSE, Validators.required),
       id: new FormControl(),
-    });
-
-    this.type.valueChanges.subscribe((value) => {
-      this.categories$ = this.transactionService.findTransactionCategories(
-        value.id
-      );
     });
   }
 
-  buildParamsForm(): void {
-    this.paramsForm = new FormGroup({
+  createParamsForm(): FormGroup {
+    return new FormGroup({
       expense: new FormControl(true),
       revenue: new FormControl(true),
       page: new FormControl(0),
@@ -80,23 +77,24 @@ export class HomeComponent implements OnInit {
     this.resetTransactionForm();
   }
 
-  loadTransactions(): void {
+  findTransactions(): void {
     const params = this.paramsForm.value as TransactionParamsModel;
     this.transactionsPage$ = this.transactionService.findTransactions(params);
   }
 
-  loadSummaries(): void {
+  findSummaries(): void {
     const params = this.paramsForm.value as TransactionParamsModel;
     this.summaries$ = this.transactionService.getSummary(params);
   }
 
-  loadExpenseSummaries(): void {
+  findExpenseSummaries(): void {
     const params = this.paramsForm.value as TransactionParamsModel;
     this.expenseSummaries$ = this.transactionService.getExpenseSummary(params);
   }
 
-  loadTypes(): void {
-    this.types$ = this.transactionService.findTransactionTypes();
+  findCategories(): void {
+    this.transactionCategories$ =
+      this.transactionService.findTransactionCategories();
   }
 
   saveTransaction(): void {
@@ -110,9 +108,9 @@ export class HomeComponent implements OnInit {
     request$.subscribe((_) => {
       this.closeTransactionFormDialog();
       this.resetParamsForm();
-      this.loadTransactions();
-      this.loadSummaries();
-      this.loadExpenseSummaries();
+      this.findTransactions();
+      this.findSummaries();
+      this.findExpenseSummaries();
     });
   }
 
@@ -128,30 +126,27 @@ export class HomeComponent implements OnInit {
 
   resetTransactionForm(): void {
     this.transactionForm.reset({
-      creationDate: new Date(),
+      creationDate: new Date()
     });
   }
 
   deleteTransaction(transaction: TransactionModel): void {
     this.transactionService.deleteTransaction(transaction).subscribe((_) => {
-      this.loadTransactions();
-      this.loadSummaries();
+      this.findTransactions();
+      this.findSummaries();
     });
   }
 
   editTransaction(transaction: TransactionModel): void {
+    this.openTransactionFormDialog();
+
     this.transactionForm.patchValue(transaction);
     this.transactionForm
       .get('creationDate')
       .setValue(new Date(transaction.creationDate));
-    this.openTransactionFormDialog();
   }
 
   get page(): AbstractControl {
     return this.paramsForm.get('page');
-  }
-
-  get type(): AbstractControl {
-    return this.transactionForm.get('type');
   }
 }

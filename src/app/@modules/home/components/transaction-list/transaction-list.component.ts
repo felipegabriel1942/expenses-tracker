@@ -7,6 +7,7 @@ import {
 import { PageModel } from 'src/app/@models/page.model';
 import { LazyLoadEvent } from 'primeng/api';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 
 @Component({
   selector: 'app-transaction-list',
@@ -51,11 +52,11 @@ export class TransactionListComponent implements OnInit {
   }
 
   private isRevenue(transaction: TransactionModel): boolean {
-    return transaction.type.id === 1;
+    return transaction.transactionType === TransactionTypeEnum.REVENUE;
   }
 
   private isExpense(transaction: TransactionModel): boolean {
-    return transaction.type.id === 2;
+    return transaction.transactionType === TransactionTypeEnum.EXPENSE;
   }
 
   public openDeleteConfimation(transaction: TransactionModel): void {
