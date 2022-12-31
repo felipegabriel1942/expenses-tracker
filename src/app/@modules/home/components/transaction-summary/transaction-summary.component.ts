@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
 import { IC_EXPENSE, IC_PROFITS, IC_SALARY } from 'src/app/consts';
 
@@ -20,19 +21,19 @@ export class TransactionSummaryComponent implements OnInit {
   ngOnInit(): void {}
 
   get revenue(): number {
-    return this.getSummaryByTypeId(1);
+    return this.getSummaryByTypeId(TransactionTypeEnum.REVENUE);
   }
 
   get expense(): number {
-    return this.getSummaryByTypeId(2);
+    return this.getSummaryByTypeId(TransactionTypeEnum.EXPENSE);
   }
 
-  private getSummaryByTypeId(typeId: number): number {
+  private getSummaryByTypeId(transactionType: TransactionTypeEnum): number {
     if (this.summaries == null) {
       return 0;
     }
 
-    const summaries = this.summaries.filter((s) => s.typeId === typeId);
+    const summaries = this.summaries.filter((s) => s.transactionType === transactionType);
 
     return summaries.length === 0 ? 0 : summaries[0].total;
   }

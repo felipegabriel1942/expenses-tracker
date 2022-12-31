@@ -1,5 +1,7 @@
+import { TransactionTypeEnum } from '../@enums/transaction-type.enum';
+
 export class TransactionSummaryModel {
-  typeId: number;
+  transactionType: TransactionTypeEnum;
   total: number;
 }
 
