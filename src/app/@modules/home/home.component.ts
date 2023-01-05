@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   closeTransactionFormDialog(): void {
     this.transactionFormIsOpen = false;
-    this.resetTransactionForm();
+    this.transactionForm = this.createTransactionForm();
   }
 
   findTransactions(): void {
@@ -104,25 +104,9 @@ export class HomeComponent implements OnInit {
 
     request$.subscribe((_) => {
       this.closeTransactionFormDialog();
-      this.resetParamsForm();
+      this.paramsForm = this.createParamsForm();
       this.findTransactions();
       this.findSummaries();
-    });
-  }
-
-  resetParamsForm(): void {
-    this.paramsForm.reset({
-      expense: true,
-      revenue: true,
-      elementsPerPage: 10,
-      page: 0,
-      period: this.paramsForm.get('period').value,
-    });
-  }
-
-  resetTransactionForm(): void {
-    this.transactionForm.reset({
-      creationDate: new Date(),
     });
   }
 

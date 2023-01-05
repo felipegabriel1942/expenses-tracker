@@ -14,6 +14,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { ChartModule } from 'primeng/chart';
 import { BadgeModule } from 'primeng/badge';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { HomeRoutingModule } from './home-routing.module';
 
@@ -47,7 +49,9 @@ import { TransactionChartComponent } from './components/transaction-chart/transa
     InputNumberModule,
     ToastModule,
     ChartModule,
-    BadgeModule
+    BadgeModule,
+    SelectButtonModule,
+    RadioButtonModule
   ],
 })
 export class HomeModule {}

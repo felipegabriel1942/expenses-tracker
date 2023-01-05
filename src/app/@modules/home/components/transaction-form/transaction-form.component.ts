@@ -44,7 +44,6 @@ export class TransactionFormComponent implements OnInit, OnChanges {
     if (changes.isOpen != null && changes.isOpen.currentValue) {
       this.filterCategories();
     }
-
   }
 
   public filterCategories(): void {

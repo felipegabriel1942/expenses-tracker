@@ -10,6 +10,26 @@
   (onHide)="onHide.emit()"
 >
   <div [formGroup]="form">
+    <div class="mt-4 mb-4">
+      <div class="flex justify-content-start flex-wrap gap-3">
+        <p-radioButton
+          name="transactionType"
+          value="Despesa"
+          formControlName="transactionType"
+          label="Despesa"
+          (onClick)="filterCategories()"
+        ></p-radioButton>
+
+        <p-radioButton
+          name="transactionType"
+          value="Receita"
+          label="Receita"
+          formControlName="transactionType"
+          (onClick)="filterCategories()"
+        ></p-radioButton>
+      </div>
+    </div>
+
     <span class="p-float-label mt-2">
       <input
         id="description-input"
@@ -44,17 +64,6 @@
         [style]="{ width: '100%' }"
       ></p-inputNumber>
       <label for="float-input">Valor</label>
-    </span>
-
-    <span class="p-float-label mt-4">
-      <p-dropdown
-        [options]="transactionTypes"
-        formControlName="transactionType"
-        [style]="{ width: '100%' }"
-        appendTo="body"
-        (onChange)="filterCategories()"
-      ></p-dropdown>
-      <label for="float-input">Tipo</label>
     </span>
 
     <span class="p-float-label mt-4">

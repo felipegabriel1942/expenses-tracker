@@ -37,7 +37,7 @@
     [value]="transactionsPage?.content"
     [lazy]="true"
     [paginator]="true"
-    [rows]="10"
+    [rows]="elementsPerPage?.value"
     [totalRecords]="transactionsPage?.totalOfElements"
     [first]="page?.value * elementsPerPage?.value"
     (onLazyLoad)="changePage($event)"
