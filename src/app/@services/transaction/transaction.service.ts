@@ -20,7 +20,7 @@ import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
   providedIn: 'root',
 })
 export class TransactionService {
-  private baseApi = 'http://localhost:8081/transaction';
+  private baseApi = 'http://localhost:8080/transaction';
 
   constructor(
     private readonly http: HttpClient,
@@ -42,28 +42,6 @@ export class TransactionService {
       )
       .pipe(
         map((res: ApiResponse<PageModel<Transactions>>) => {
-          return res.content;
-        })
-      );
-  }
-
-  findTransactionCategories(): Observable<TransactionCategoryModel> {
-    return this.http
-      .get<ApiResponse<TransactionCategoryModel>>(
-        `${this.baseApi}/categories`
-      )
-      .pipe(
-        map((res: ApiResponse<TransactionCategoryModel>) => {
-          return res.content;
-        })
-      );
-  }
-
-  findTransactionTypes(): Observable<TransactionTypeModel> {
-    return this.http
-      .get<ApiResponse<TransactionTypeModel>>(`${this.baseApi}/types`)
-      .pipe(
-        map((res: ApiResponse<TransactionTypeModel>) => {
           return res.content;
         })
       );
@@ -123,24 +101,6 @@ export class TransactionService {
         `${
           this.baseApi
         }/summary?user-id=1&period=${`${params.period.getFullYear()}-${
-          params.period.getMonth() + 1
-        }`}`
-      )
-      .pipe(
-        map((res) => {
-          return res.content;
-        })
-      );
-  }
-
-  getExpenseSummary(
-    params: TransactionParamsModel
-  ): Observable<ExpenseSummaries> {
-    return this.http
-      .get<ApiResponse<ExpenseSummaries>>(
-        `${
-          this.baseApi
-        }/summary/expenses?user-id=1&period=${`${params.period.getFullYear()}-${
           params.period.getMonth() + 1
         }`}`
       )

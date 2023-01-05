@@ -3,7 +3,6 @@ import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
 import { IC_EXPENSE, IC_PROFITS, IC_SALARY } from 'src/app/consts';
 
-
 @Component({
   selector: 'app-transaction-summary',
   templateUrl: './transaction-summary.component.html',
@@ -33,7 +32,9 @@ export class TransactionSummaryComponent implements OnInit {
       return 0;
     }
 
-    const summaries = this.summaries.filter((s) => s.transactionType === transactionType);
+    const summaries = this.summaries.filter(
+      (s) => s.transactionType === transactionType
+    );
 
     return summaries.length === 0 ? 0 : summaries[0].total;
   }

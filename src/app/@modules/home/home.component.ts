@@ -14,9 +14,9 @@ import { TransactionService } from 'src/app/@services/transaction/transaction.se
 import { TransactionParamsModel } from 'src/app/@models/transaction-params.mode';
 import { TransactionCategoryModel } from 'src/app/@models/transaction-category.model';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
-import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
+import { TransactionCategoryService } from 'src/app/@services/transaction-category/transaction-category.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   transactionsPage$: Observable<PageModel<Transactions>>;
   transactionCategories$: Observable<TransactionCategoryModel>;
   summaries$: Observable<Summaries>;
-  expenseSummaries$: Observable<ExpenseSummaries>;
 
   transactionFormIsOpen = false;
 
@@ -35,15 +34,15 @@ export class HomeComponent implements OnInit {
   transactionForm: FormGroup;
 
   constructor(
-    private readonly transactionService: TransactionService
+    private readonly transactionService: TransactionService,
+    private readonly transactionCategoryService: TransactionCategoryService
   ) {}
 
   ngOnInit(): void {
     this.transactionForm = this.createTransactionForm();
     this.paramsForm = this.createParamsForm();
-    this.findSummaries();
-    this.findExpenseSummaries();
     this.findTransactions();
+    this.findSummaries();
     this.findCategories();
   }
 
@@ -53,7 +52,10 @@ export class HomeComponent implements OnInit {
       creationDate: new FormControl(new Date(), Validators.required),
       value: new FormControl(null, Validators.required),
       transactionCategory: new FormControl(null, Validators.required),
-      transactionType: new FormControl(TransactionTypeEnum.EXPENSE, Validators.required),
+      transactionType: new FormControl(
+        TransactionTypeEnum.EXPENSE,
+        Validators.required
+      ),
       id: new FormControl(),
     });
   }
@@ -87,14 +89,9 @@ export class HomeComponent implements OnInit {
     this.summaries$ = this.transactionService.getSummary(params);
   }
 
-  findExpenseSummaries(): void {
-    const params = this.paramsForm.value as TransactionParamsModel;
-    this.expenseSummaries$ = this.transactionService.getExpenseSummary(params);
-  }
-
   findCategories(): void {
     this.transactionCategories$ =
-      this.transactionService.findTransactionCategories();
+      this.transactionCategoryService.findTransactionCategories();
   }
 
   saveTransaction(): void {
@@ -110,7 +107,6 @@ export class HomeComponent implements OnInit {
       this.resetParamsForm();
       this.findTransactions();
       this.findSummaries();
-      this.findExpenseSummaries();
     });
   }
 
@@ -126,14 +122,13 @@ export class HomeComponent implements OnInit {
 
   resetTransactionForm(): void {
     this.transactionForm.reset({
-      creationDate: new Date()
+      creationDate: new Date(),
     });
   }
 
   deleteTransaction(transaction: TransactionModel): void {
     this.transactionService.deleteTransaction(transaction).subscribe((_) => {
       this.findTransactions();
-      this.findSummaries();
     });
   }
 
