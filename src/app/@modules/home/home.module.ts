@@ -51,7 +51,7 @@ import { TransactionChartComponent } from './components/transaction-chart/transa
     ChartModule,
     BadgeModule,
     SelectButtonModule,
-    RadioButtonModule
+    RadioButtonModule,
   ],
 })
 export class HomeModule {}

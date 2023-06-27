@@ -1,0 +1,19 @@
+{{ registering?.value ? "Cadastre-se" : "Entrar" }}
+
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+  <input formControlName="email" type="email" placeholder="email" />
+  <input formControlName="password" type="password" placeholder="senha" />
+  <div *ngIf="loginError?.value">Login ou senha incorreto</div>
+  <div *ngIf="!registering?.value">
+    <button type="submit">Enviar</button>
+  </div>
+  <div *ngIf="registering?.value">
+    <button type="submit">Cadastrar</button>
+  </div>
+  <div *ngIf="registering?.value">
+    <button type="submit" (click)="cancelUserRegistration()">Cancelar</button>
+  </div>
+  <div *ngIf="!registering?.value">
+    <a href="#" (click)="openUserRegistration($event)">Não possue usuário? Cadastre-se</a>
+  </div>
+</form>

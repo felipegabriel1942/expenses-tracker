@@ -58,7 +58,7 @@
       <tr>
         <td>{{ transaction?.description }}</td>
         <td>{{ transaction?.creationDate | date : "dd/MM/yyyy" }}</td>
-        <td>{{ transaction?.value | currency : "R$" }}</td>
+        <td>{{ transaction?.value | currency }}</td>
         <td>
           <i
             pBadge

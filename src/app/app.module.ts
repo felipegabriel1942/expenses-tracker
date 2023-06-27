@@ -1,6 +1,6 @@
 import { CoreModule } from './@core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +10,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,9 +23,19 @@ import { MessageService } from 'primeng/api';
     BrowserAnimationsModule,
     HttpClientModule,
     ToastModule,
-    CoreModule
+    CoreModule,
   ],
   bootstrap: [AppComponent],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt',
+    },
+    {
+      provide: DEFAULT_CURRENCY_CODE,
+      useValue: 'BRL',
+    },
+  ],
 })
 export class AppModule {}

@@ -9,7 +9,7 @@ import { TransactionCategoryModel } from 'src/app/@models/transaction-category.m
   providedIn: 'root',
 })
 export class TransactionCategoryService {
-  private baseApi = 'http://localhost:8080/transaction-category';
+  private baseApi = 'http://localhost:8081/transaction-category';
 
   constructor(private readonly http: HttpClient) {}
 

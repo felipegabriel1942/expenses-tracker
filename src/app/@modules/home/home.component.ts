@@ -90,8 +90,7 @@ export class HomeComponent implements OnInit {
   }
 
   findCategories(): void {
-    this.transactionCategories$ =
-      this.transactionCategoryService.findTransactionCategories();
+    this.transactionCategories$ = this.transactionCategoryService.findTransactionCategories();
   }
 
   saveTransaction(): void {

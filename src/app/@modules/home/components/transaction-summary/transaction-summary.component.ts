@@ -17,13 +17,13 @@ export class TransactionSummaryComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  get revenue(): number {
+  public get revenue(): number {
     return this.getSummaryByTypeId(TransactionTypeEnum.REVENUE);
   }
 
-  get expense(): number {
+  public get expense(): number {
     return this.getSummaryByTypeId(TransactionTypeEnum.EXPENSE);
   }
 

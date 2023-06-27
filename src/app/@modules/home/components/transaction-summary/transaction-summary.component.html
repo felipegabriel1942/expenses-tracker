@@ -1,38 +1,57 @@
 <div class="grid mt-1">
   <div class="col">
-    <p-panel header="Despesas"
-      ><div class="grid">
-        <div class="col"><img [src]="IC_EXPENSE" /></div>
-        <div class="col flex align-content-center">
-          <span class="flex align-items-center justify-content-center">{{
-            expense | currency: "R$"
-          }}</span>
-        </div>
-      </div>
-    </p-panel>
+    <ng-template
+      *ngTemplateOutlet="
+        summaryCard;
+        context: {
+          $implicit: {
+            header: 'Despesas',
+            icon: IC_EXPENSE,
+            value: expense
+          }
+        }
+      "
+    ></ng-template>
   </div>
   <div class="col">
-    <p-panel header="Receitas">
-      <div class="grid">
-        <div class="col"><img [src]="IC_PROFITS" /></div>
-        <div class="col flex align-content-center">
-          <span class="flex align-items-center justify-content-center">{{
-            revenue | currency: "R$"
-          }}</span>
-        </div>
-      </div>
-    </p-panel>
+    <ng-template
+      *ngTemplateOutlet="
+        summaryCard;
+        context: {
+          $implicit: {
+            header: 'Receitas',
+            icon: IC_PROFITS,
+            value: revenue
+          }
+        }
+      "
+    ></ng-template>
   </div>
   <div class="col">
-    <p-panel header="Resultado">
+    <ng-template
+      *ngTemplateOutlet="
+        summaryCard;
+        context: {
+          $implicit: {
+            header: 'Resultado',
+            icon: IC_SALARY,
+            value: revenue - expense
+          }
+        }
+      "
+    ></ng-template>
+  </div>
+
+  <ng-template #summaryCard let-summary>
+    <p-panel [header]="summary?.header">
       <div class="grid">
-        <div class="col"><img [src]="IC_SALARY" /></div>
+        <div class="col"><img [src]="summary?.icon" /></div>
         <div class="col flex align-content-center">
           <span class="flex align-items-center justify-content-center">{{
-            revenue - expense | currency: "R$"
+            summary?.value | currency
           }}</span>
         </div>
       </div>
     </p-panel>
-  </div>
+  </ng-template>
 </div>
