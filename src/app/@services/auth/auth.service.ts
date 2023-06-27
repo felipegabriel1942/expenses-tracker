@@ -8,13 +8,17 @@ import { ApiResponse } from 'src/app/@models/api-reponse.model';
   providedIn: 'root',
 })
 export class AuthService {
+
   constructor(private readonly http: HttpClient) {}
 
   authenticateUser(user: any): Observable<string> {
     return this.http
-      .post<ApiResponse<string>>(`http://localhost:8081/api/v1/auth/authenticate`, user)
+      .post<ApiResponse<string>>(
+        `http://localhost:8081/api/v1/auth/authenticate`,
+        user
+      )
       .pipe(
-        map(res => {
+        map((res) => {
           return res.content;
         })
       );
