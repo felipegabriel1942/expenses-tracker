@@ -12,6 +12,11 @@ export class HeaderComponent implements OnInit {
   public ngOnInit(): void {}
 
   public logout(): void {
+    sessionStorage.removeItem('token');
     this.route.navigateByUrl('/');
+  }
+
+  public get canShow(): boolean {
+    return !!sessionStorage.getItem('token');
   }
 }
