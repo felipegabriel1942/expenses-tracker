@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,11 +9,8 @@ import {
 import { ApiResponse } from 'src/app/@models/api-reponse.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { TransactionParamsModel } from 'src/app/@models/transaction-params.mode';
-import { TransactionCategoryModel } from 'src/app/@models/transaction-category.model';
-import { TransactionTypeModel } from 'src/app/@models/transaction-type.model';
 import { MessageService } from 'primeng/api';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
-import { ExpenseSummaries } from 'src/app/@models/expense-summary.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +32,7 @@ export class TransactionService {
           params.elementsPerPage
         }&expense=${params.expense}&revenue=${
           params.revenue
-        }&user-id=1&period=${`${params.period.getFullYear()}-${
+        }&period=${`${params.period.getFullYear()}-${
           params.period.getMonth() + 1
         }`}`
       )
@@ -48,9 +44,6 @@ export class TransactionService {
   }
 
   saveTransaction(transaction: TransactionModel): Observable<void> {
-    // TODO: ARRUMAR OUTRA FORMA PARA SETAR O USUARIO
-    transaction.user = 1;
-
     return this.http
       .post<ApiResponse<void>>(`${this.baseApi}/create`, transaction)
       .pipe(
@@ -65,9 +58,6 @@ export class TransactionService {
   }
 
   updateTransaction(transaction: TransactionModel): Observable<void> {
-    // TODO: ARRUMAR OUTRA FORMA PARA SETAR O USUARIO
-    transaction.user = 1;
-
     return this.http
       .put<ApiResponse<void>>(`${this.baseApi}/update`, transaction)
       .pipe(

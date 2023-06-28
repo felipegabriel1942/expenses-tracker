@@ -52,11 +52,11 @@ export class TransactionListComponent implements OnInit {
   }
 
   private isRevenue(transaction: TransactionModel): boolean {
-    return transaction.transactionType === TransactionTypeEnum.REVENUE;
+    return transaction.transactionCategory.transactionType === TransactionTypeEnum.REVENUE;
   }
 
   private isExpense(transaction: TransactionModel): boolean {
-    return transaction.transactionType === TransactionTypeEnum.EXPENSE;
+    return transaction.transactionCategory.transactionType === TransactionTypeEnum.EXPENSE;
   }
 
   public openDeleteConfimation(transaction: TransactionModel): void {

@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   createTransactionForm(): FormGroup {
     return new FormGroup({
       description: new FormControl(null, Validators.required),
-      creationDate: new FormControl(new Date(), Validators.required),
+      transactionDate: new FormControl(new Date(), Validators.required),
       value: new FormControl(null, Validators.required),
       transactionCategory: new FormControl(null, Validators.required),
       transactionType: new FormControl(
@@ -120,8 +120,8 @@ export class HomeComponent implements OnInit {
 
     this.transactionForm.patchValue(transaction);
     this.transactionForm
-      .get('creationDate')
-      .setValue(new Date(transaction.creationDate));
+      .get('transactionDate')
+      .setValue(new Date(transaction.transactionDate));
   }
 
   get page(): AbstractControl {

@@ -57,12 +57,12 @@
     <ng-template pTemplate="body" let-transaction>
       <tr>
         <td>{{ transaction?.description }}</td>
-        <td>{{ transaction?.creationDate | date : "dd/MM/yyyy" }}</td>
+        <td>{{ transaction?.transactionDate | date : "dd/MM/yyyy" }}</td>
         <td>{{ transaction?.value | currency }}</td>
         <td>
           <i
             pBadge
-            [value]="transaction?.transactionType"
+            [value]="transaction?.transactionCategory?.transactionType"
             [severity]="setBadgeColor(transaction)"
           ></i>
         </td>
