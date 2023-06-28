@@ -10,6 +10,7 @@ import {
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { PeriodEnum } from 'src/app/@enums/period.enum';
 
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { TransactionCategories } from 'src/app/@models/transaction-category.model';
@@ -23,6 +24,7 @@ export class TransactionFormComponent implements OnInit, OnChanges {
   public isMobile = false;
   public transactionTypes = new Array<TransactionTypeEnum>();
   public filteredCategories: TransactionCategories;
+  public periods = new Array<PeriodEnum>();
 
   @Input() form: FormGroup;
   @Input() transactionCategories: TransactionCategories;
@@ -36,6 +38,7 @@ export class TransactionFormComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     this.isMobile = this.deviceService.isMobile();
     this.transactionTypes = Object.values(TransactionTypeEnum);
+    this.periods = Object.values(PeriodEnum);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

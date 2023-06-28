@@ -76,6 +76,26 @@
       ></p-dropdown>
       <label for="float-input">Categoria</label>
     </span>
+
+    <ng-container *ngIf="form?.get('id').value == null">
+      <span class="p-float-label mt-4">
+        <p-inputNumber
+          formControlName="totalInstallments"
+          [style]="{ width: '100%' }"
+        ></p-inputNumber>
+        <label for="float-input">Repetições</label>
+      </span>
+
+      <span class="p-float-label mt-4">
+        <p-dropdown
+          [options]="periods"
+          formControlName="period"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+        ></p-dropdown>
+        <label for="float-input">Período</label>
+      </span>
+    </ng-container>
   </div>
   <button
     pButton

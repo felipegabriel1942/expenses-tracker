@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -17,6 +17,7 @@ import { Summaries } from 'src/app/@models/transaction-summary.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { TransactionCategoryService } from 'src/app/@services/transaction-category/transaction-category.service';
+import { PeriodEnum } from 'src/app/@enums/period.enum';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -56,7 +57,14 @@ export class HomeComponent implements OnInit {
         TransactionTypeEnum.EXPENSE,
         Validators.required
       ),
+      installment: new FormControl(1),
+      totalInstallments: new FormControl(1, [
+        Validators.required,
+        Validators.min(1),
+      ]),
+      period: new FormControl(PeriodEnum.MONTHLY),
       id: new FormControl(),
+      audit: new FormControl()
     });
   }
 
@@ -90,7 +98,8 @@ export class HomeComponent implements OnInit {
   }
 
   findCategories(): void {
-    this.transactionCategories$ = this.transactionCategoryService.findTransactionCategories();
+    this.transactionCategories$ =
+      this.transactionCategoryService.findTransactionCategories();
   }
 
   saveTransaction(): void {
