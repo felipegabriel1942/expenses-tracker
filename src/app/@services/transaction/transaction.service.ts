@@ -38,6 +38,7 @@ export class TransactionService {
       )
       .pipe(
         map((res: ApiResponse<PageModel<Transactions>>) => {
+          console.log(res);
           return res.content;
         })
       );
