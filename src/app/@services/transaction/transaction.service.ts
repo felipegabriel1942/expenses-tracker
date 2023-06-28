@@ -9,7 +9,6 @@ import {
 import { ApiResponse } from 'src/app/@models/api-reponse.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { TransactionParamsModel } from 'src/app/@models/transaction-params.mode';
-import { MessageService } from 'primeng/api';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
 
 @Injectable({
@@ -18,10 +17,7 @@ import { Summaries } from 'src/app/@models/transaction-summary.model';
 export class TransactionService {
   private baseApi = 'http://localhost:8081/transaction';
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly messageService: MessageService
-  ) {}
+  constructor(private readonly http: HttpClient) {}
 
   findTransactions(
     params: TransactionParamsModel
@@ -38,52 +34,35 @@ export class TransactionService {
       )
       .pipe(
         map((res: ApiResponse<PageModel<Transactions>>) => {
-          console.log(res);
           return res.content;
         })
       );
   }
 
-  saveTransaction(transaction: TransactionModel): Observable<void> {
-    return this.http
-      .post<ApiResponse<void>>(`${this.baseApi}/create`, transaction)
-      .pipe(
-        map((res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: res.message,
-          });
-        })
-      );
+  saveTransaction(
+    transaction: TransactionModel
+  ): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(
+      `${this.baseApi}/create`,
+      transaction
+    );
   }
 
-  updateTransaction(transaction: TransactionModel): Observable<void> {
-    return this.http
-      .put<ApiResponse<void>>(`${this.baseApi}/update`, transaction)
-      .pipe(
-        map((res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: res.message,
-          });
-        })
-      );
+  updateTransaction(
+    transaction: TransactionModel
+  ): Observable<ApiResponse<void>> {
+    return this.http.put<ApiResponse<void>>(
+      `${this.baseApi}/update`,
+      transaction
+    );
   }
 
-  deleteTransaction(transaction: TransactionModel): Observable<void> {
-    return this.http
-      .delete<ApiResponse<void>>(`${this.baseApi}/delete?id=${transaction.id}`)
-      .pipe(
-        map((res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: res.message,
-          });
-        })
-      );
+  deleteTransaction(
+    transaction: TransactionModel
+  ): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(
+      `${this.baseApi}/delete?id=${transaction.id}`
+    );
   }
 
   getSummary(params: TransactionParamsModel): Observable<Summaries> {
