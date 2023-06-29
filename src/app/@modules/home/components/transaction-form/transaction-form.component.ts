@@ -44,6 +44,14 @@ export class TransactionFormComponent implements OnInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     this.filteredCategories = this.transactionCategories;
 
+    const transactionDate = this.form.get('transactionDate').value;
+
+    if (!(transactionDate instanceof Date)) {
+      this.form
+        .get('transactionDate')
+        .setValue(new Date(`${transactionDate}T00:00:00`));
+    }
+
     if (changes.isOpen != null && changes.isOpen.currentValue) {
       this.filterCategories();
     }

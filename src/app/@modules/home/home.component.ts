@@ -126,12 +126,7 @@ export class HomeComponent implements OnInit {
 
   editTransaction(transaction: TransactionModel): void {
     this.openTransactionFormDialog();
-
     this.transactionForm.patchValue(transaction);
-
-    this.transactionForm
-      .get('transactionDate')
-      .setValue(new Date(`${transaction.transactionDate}T00:00:00`));
   }
 
   get page(): AbstractControl {
