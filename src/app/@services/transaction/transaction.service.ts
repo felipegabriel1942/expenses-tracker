@@ -10,12 +10,13 @@ import { ApiResponse } from 'src/app/@models/api-reponse.model';
 import { PageModel } from 'src/app/@models/page.model';
 import { TransactionParamsModel } from 'src/app/@models/transaction-params.mode';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionService {
-  private baseApi = 'http://localhost:8081/transaction';
+  private baseUrl = `${environment.baseApi}/transaction`;
 
   constructor(private readonly http: HttpClient) {}
 
@@ -24,7 +25,7 @@ export class TransactionService {
   ): Observable<PageModel<Transactions>> {
     return this.http
       .get<ApiResponse<PageModel<Transactions>>>(
-        `${this.baseApi}/find?page=${params.page}&elements-per-page=${
+        `${this.baseUrl}/find?page=${params.page}&elements-per-page=${
           params.elementsPerPage
         }&expense=${params.expense}&revenue=${
           params.revenue
@@ -43,7 +44,7 @@ export class TransactionService {
     transaction: TransactionModel
   ): Observable<ApiResponse<void>> {
     return this.http.post<ApiResponse<void>>(
-      `${this.baseApi}/create`,
+      `${this.baseUrl}/create`,
       transaction
     );
   }
@@ -52,7 +53,7 @@ export class TransactionService {
     transaction: TransactionModel
   ): Observable<ApiResponse<void>> {
     return this.http.put<ApiResponse<void>>(
-      `${this.baseApi}/update`,
+      `${this.baseUrl}/update`,
       transaction
     );
   }
@@ -61,7 +62,7 @@ export class TransactionService {
     transaction: TransactionModel
   ): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(
-      `${this.baseApi}/delete?id=${transaction.id}`
+      `${this.baseUrl}/delete?id=${transaction.id}`
     );
   }
 
@@ -69,7 +70,7 @@ export class TransactionService {
     return this.http
       .get<ApiResponse<Summaries>>(
         `${
-          this.baseApi
+          this.baseUrl
         }/summary?user-id=1&period=${`${params.period.getFullYear()}-${
           params.period.getMonth() + 1
         }`}`
