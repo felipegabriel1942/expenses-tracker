@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { Summaries } from 'src/app/@models/transaction-summary.model';
+import { LoadingService } from 'src/app/@services/loading/loading.service';
 import { IC_EXPENSE, IC_PROFITS, IC_SALARY } from 'src/app/consts';
 
 @Component({
@@ -15,7 +16,7 @@ export class TransactionSummaryComponent implements OnInit {
   public IC_PROFITS = IC_PROFITS;
   public IC_SALARY = IC_SALARY;
 
-  constructor() {}
+  constructor(private readonly loadingService: LoadingService) {}
 
   public ngOnInit(): void {}
 
@@ -37,5 +38,9 @@ export class TransactionSummaryComponent implements OnInit {
     );
 
     return summaries.length === 0 ? 0 : summaries[0].total;
+  }
+
+  public get isLoading(): boolean {
+    return this.loadingService.getLoading().value;
   }
 }

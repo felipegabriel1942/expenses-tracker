@@ -13,6 +13,8 @@ import { MessageService } from 'primeng/api';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 
+import { NgxSpinnerModule } from "ngx-spinner";
+
 registerLocaleData(ptBr);
 
 @NgModule({
@@ -24,6 +26,7 @@ registerLocaleData(ptBr);
     HttpClientModule,
     ToastModule,
     CoreModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
   ],
   bootstrap: [AppComponent],
   providers: [

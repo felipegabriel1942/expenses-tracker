@@ -46,11 +46,15 @@
     <p-panel [header]="summary?.header">
       <div class="grid">
         <div class="col"><img [src]="summary?.icon" /></div>
-        <div class="col flex align-content-center">
+        <div class="col flex align-content-center" *ngIf="!isLoading">
           <span class="flex align-items-center justify-content-center">{{
             summary?.value | currency
           }}</span>
         </div>
+        <p-progressSpinner
+          styleClass="w-4rem h-4rem"
+          *ngIf="isLoading"
+        ></p-progressSpinner>
       </div>
     </p-panel>
   </ng-template>
