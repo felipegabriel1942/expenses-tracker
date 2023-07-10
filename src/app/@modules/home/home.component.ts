@@ -18,6 +18,7 @@ import { PageModel } from 'src/app/@models/page.model';
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { TransactionCategoryService } from 'src/app/@services/transaction-category/transaction-category.service';
 import { PeriodEnum } from 'src/app/@enums/period.enum';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
