@@ -1,5 +1,12 @@
 .header {
-  height: 70px;
+  height: 59px;
   background: purple;
   box-shadow: 0px 1px 8px gray;
+}
+
+.username {
+  font-family: Roboto;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
 }
