@@ -8,6 +8,8 @@ import { PageModel } from 'src/app/@models/page.model';
 import { LazyLoadEvent } from 'primeng/api';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
+import { OperationType } from 'src/app/@enums/operation-type.enum';
+import { Operation } from 'src/app/@models/operation.model';
 
 @Component({
   selector: 'app-transaction-list',
@@ -15,10 +17,10 @@ import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
   styleUrls: ['./transaction-list.component.scss'],
 })
 export class TransactionListComponent implements OnInit {
-
   public deleteConfirmationIsOpen = false;
   public selectedTransaction = new TransactionModel();
   public isMobile = false;
+  public operationTypes = Object.values(OperationType);
 
   @Input() public transactionsPage: PageModel<Transactions>;
   @Input() public form: FormGroup;
@@ -33,6 +35,7 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.deviceService.isMobile();
+    console.log(this.operationTypes);
   }
 
   changePage(event: LazyLoadEvent): void {
@@ -52,11 +55,17 @@ export class TransactionListComponent implements OnInit {
   }
 
   private isRevenue(transaction: TransactionModel): boolean {
-    return transaction.transactionCategory.transactionType === TransactionTypeEnum.REVENUE;
+    return (
+      transaction.transactionCategory.transactionType ===
+      TransactionTypeEnum.REVENUE
+    );
   }
 
   private isExpense(transaction: TransactionModel): boolean {
-    return transaction.transactionCategory.transactionType === TransactionTypeEnum.EXPENSE;
+    return (
+      transaction.transactionCategory.transactionType ===
+      TransactionTypeEnum.EXPENSE
+    );
   }
 
   public openDeleteConfimation(transaction: TransactionModel): void {
@@ -64,8 +73,13 @@ export class TransactionListComponent implements OnInit {
     this.deleteConfirmationIsOpen = true;
   }
 
-  public deleteTransaction(): void {
-    this.onDeleteClick.emit(this.selectedTransaction);
+  public deleteTransaction(operationType: OperationType): void {
+    const operation = new Operation<TransactionModel>();
+    operation.content = this.selectedTransaction;
+    operation.operationType = operationType;
+
+    this.onDeleteClick.emit(operation);
+
     this.selectedTransaction = new TransactionModel();
     this.deleteConfirmationIsOpen = false;
   }

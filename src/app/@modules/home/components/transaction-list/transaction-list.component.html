@@ -104,12 +104,16 @@
 </p-panel>
 
 <p-dialog [(visible)]="deleteConfirmationIsOpen" [modal]="true">
-  Deseja realmente excluir esta transação?
+  <p class="mb-2">
+    Deseja excluir...
+  </p>
 
   <button
+    *ngFor="let operationType of operationTypes"
     pButton
     type="button"
-    label="Confirmar"
-    (click)="deleteTransaction()"
+    class="block w-full mb-2"
+    [label]="operationType"
+    (click)="deleteTransaction(operationType)"
   ></button>
 </p-dialog>

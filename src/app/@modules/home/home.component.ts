@@ -18,6 +18,8 @@ import { PageModel } from 'src/app/@models/page.model';
 import { TransactionTypeEnum } from 'src/app/@enums/transaction-type.enum';
 import { TransactionCategoryService } from 'src/app/@services/transaction-category/transaction-category.service';
 import { PeriodEnum } from 'src/app/@enums/period.enum';
+import { Operation } from 'src/app/@models/operation.model';
+import { OperationType } from 'src/app/@enums/operation-type.enum';
 
 @Component({
   selector: 'app-home',
@@ -119,10 +121,26 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteTransaction(transaction: TransactionModel): void {
-    this.transactionService.deleteTransaction(transaction).subscribe((_) => {
-      this.findTransactions();
-    });
+  // TODO: Procurar uma forma de melhorar este metodo no futuro, fere principio OPEN/CLOSED
+  deleteTransaction(operation: Operation<TransactionModel>): void {
+    const transactionId = operation.content.id;
+
+    let request$;
+
+    if (operation.operationType.includes(OperationType.ONLY_THIS)) {
+      request$ = this.transactionService.deleteTransaction(transactionId);
+    }
+
+    if (operation.operationType.includes(OperationType.ALL)) {
+      request$ = this.transactionService.deleteAllTransactions(transactionId);
+    }
+
+    if (operation.operationType.includes(OperationType.THIS_AND_FUTURE)) {
+      request$ =
+        this.transactionService.deleteThisAndFutureTransactions(transactionId);
+    }
+
+    request$.subscribe((_) => this.findTransactions());
   }
 
   editTransaction(transaction: TransactionModel): void {

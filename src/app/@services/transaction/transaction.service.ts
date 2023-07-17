@@ -58,11 +58,25 @@ export class TransactionService {
     );
   }
 
-  deleteTransaction(
-    transaction: TransactionModel
+  deleteTransaction(transactionId: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(
+      `${this.baseUrl}/delete?id=${transactionId}`
+    );
+  }
+
+  deleteThisAndFutureTransactions(
+    transactionId: number
   ): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(
-      `${this.baseUrl}/delete?id=${transaction.id}`
+      `${this.baseUrl}/delete-this-and-future-transactions?id=${transactionId}`
+    );
+  }
+
+  deleteAllTransactions(
+    transactionId: number
+  ): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(
+      `${this.baseUrl}/delete-all-transactions?id=${transactionId}`
     );
   }
 
