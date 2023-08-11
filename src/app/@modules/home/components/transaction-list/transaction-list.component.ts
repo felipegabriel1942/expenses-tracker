@@ -35,7 +35,6 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.deviceService.isMobile();
-    console.log(this.operationTypes);
   }
 
   changePage(event: LazyLoadEvent): void {
@@ -73,13 +72,20 @@ export class TransactionListComponent implements OnInit {
     this.deleteConfirmationIsOpen = true;
   }
 
-  public deleteTransaction(operationType: OperationType): void {
+  public deleteTransaction(operationType?: OperationType): void {
+    if (!operationType) {
+      operationType = OperationType.ONLY_THIS;
+    }
+
     const operation = new Operation<TransactionModel>();
     operation.content = this.selectedTransaction;
     operation.operationType = operationType;
 
     this.onDeleteClick.emit(operation);
+    this.closeDeleteConfirmation();
+  }
 
+  public closeDeleteConfirmation(): void {
     this.selectedTransaction = new TransactionModel();
     this.deleteConfirmationIsOpen = false;
   }

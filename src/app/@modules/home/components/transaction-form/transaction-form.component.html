@@ -79,7 +79,16 @@
       <label for="float-input">Categoria</label>
     </span>
 
-    <ng-container *ngIf="form?.get('id').value == null">
+    <div class="mt-4">
+      <p-inputSwitch
+        formControlName="repeat"
+        inputId="repeat"
+        class="mr-2"
+      ></p-inputSwitch>
+      <label for="repeat">Se repete?</label>
+    </div>
+
+    <ng-container *ngIf="canShowRepetitionFields">
       <span class="p-float-label mt-4">
         <p-inputNumber
           formControlName="totalInstallments"
@@ -107,6 +116,6 @@
     class="p-button-warning mt-4 p-button-rounded"
     [style]="{ width: '100%' }"
     [disabled]="form?.invalid"
-    (click)="onSave.emit()"
+    (click)="save()"
   ></button>
 </p-dialog>

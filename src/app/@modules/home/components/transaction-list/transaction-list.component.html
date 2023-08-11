@@ -104,16 +104,32 @@
 </p-panel>
 
 <p-dialog [(visible)]="deleteConfirmationIsOpen" [modal]="true">
-  <p class="mb-2">
-    Deseja excluir...
-  </p>
-
-  <button
-    *ngFor="let operationType of operationTypes"
-    pButton
-    type="button"
-    class="block w-full mb-2"
-    [label]="operationType"
-    (click)="deleteTransaction(operationType)"
-  ></button>
+  <ng-container *ngIf="selectedTransaction?.totalInstallments > 1">
+    <p class="mb-2">Deseja excluir...</p>
+    <button
+      *ngFor="let operationType of operationTypes"
+      pButton
+      type="button"
+      class="block w-full mb-2"
+      [label]="operationType"
+      (click)="deleteTransaction(operationType)"
+    ></button>
+  </ng-container>
+  <ng-container *ngIf="selectedTransaction?.totalInstallments === 1">
+    <p class="mb-2">Deseja realmente exluir?</p>
+    <button
+      pButton
+      type="button"
+      class="p-button-danger block w-full mb-2"
+      [label]="'Não'"
+      (click)="closeDeleteConfirmation()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      class="block w-full mb-2"
+      [label]="'Sim'"
+      (click)="deleteTransaction()"
+    ></button>
+  </ng-container>
 </p-dialog>

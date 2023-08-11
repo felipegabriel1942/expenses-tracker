@@ -27,22 +27,22 @@ import { OperationType } from 'src/app/@enums/operation-type.enum';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  transactionsPage$: Observable<PageModel<Transactions>>;
-  transactionCategories$: Observable<TransactionCategoryModel>;
-  summaries$: Observable<Summaries>;
+  public transactionsPage$: Observable<PageModel<Transactions>>;
+  public transactionCategories$: Observable<TransactionCategoryModel>;
+  public summaries$: Observable<Summaries>;
 
-  transactionFormIsOpen = false;
+  public transactionFormIsOpen = false;
 
   // TODO: MUDAR PARA NOME QUE FAÇA MAIS SENTIDO, COMO FILTER_FORM.
-  paramsForm: FormGroup;
-  transactionForm: FormGroup;
+  public paramsForm: FormGroup;
+  public transactionForm: FormGroup;
 
-  constructor(
+  public constructor(
     private readonly transactionService: TransactionService,
     private readonly transactionCategoryService: TransactionCategoryService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.transactionForm = this.createTransactionForm();
     this.paramsForm = this.createParamsForm();
     this.findTransactions();
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.findCategories();
   }
 
-  createTransactionForm(): FormGroup {
+  private createTransactionForm(): FormGroup {
     return new FormGroup({
       description: new FormControl(null, Validators.required),
       transactionDate: new FormControl(new Date(), Validators.required),
@@ -68,10 +68,11 @@ export class HomeComponent implements OnInit {
       period: new FormControl(PeriodEnum.MONTHLY),
       id: new FormControl(),
       audit: new FormControl(),
+      repeat: new FormControl(false)
     });
   }
 
-  createParamsForm(): FormGroup {
+  private createParamsForm(): FormGroup {
     return new FormGroup({
       expense: new FormControl(true),
       revenue: new FormControl(true),
@@ -81,39 +82,32 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openTransactionFormDialog(): void {
+  public openTransactionFormDialog(): void {
     this.transactionFormIsOpen = true;
   }
 
-  closeTransactionFormDialog(): void {
+  public closeTransactionFormDialog(): void {
     this.transactionFormIsOpen = false;
     this.transactionForm = this.createTransactionForm();
   }
 
-  findTransactions(): void {
+  public findTransactions(): void {
     const params = this.paramsForm.value as TransactionParamsModel;
     this.transactionsPage$ = this.transactionService.findTransactions(params);
   }
 
-  findSummaries(): void {
+  public findSummaries(): void {
     const params = this.paramsForm.value as TransactionParamsModel;
     this.summaries$ = this.transactionService.getSummary(params);
   }
 
-  findCategories(): void {
+  public findCategories(): void {
     this.transactionCategories$ =
       this.transactionCategoryService.findTransactionCategories();
   }
 
-  saveTransaction(): void {
-    const transaction = this.transactionForm.value;
-
-    const request$ =
-      transaction.id == null
-        ? this.transactionService.saveTransaction(transaction)
-        : this.transactionService.updateTransaction(transaction);
-
-    request$.subscribe((_) => {
+  public saveTransaction(): void {
+    this.createOrUpdate(this.transactionForm.value).subscribe((_) => {
       this.closeTransactionFormDialog();
       this.paramsForm = this.createParamsForm();
       this.findTransactions();
@@ -121,8 +115,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  private createOrUpdate(transaction: TransactionModel) {
+    return transaction.id == null
+      ? this.transactionService.saveTransaction(transaction)
+      : this.transactionService.updateTransaction(transaction);
+  }
+
   // TODO: Procurar uma forma de melhorar este metodo no futuro, fere principio OPEN/CLOSED
-  deleteTransaction(operation: Operation<TransactionModel>): void {
+  public deleteTransaction(operation: Operation<TransactionModel>): void {
     const transactionId = operation.content.id;
 
     let request$;
@@ -143,12 +143,12 @@ export class HomeComponent implements OnInit {
     request$.subscribe((_) => this.findTransactions());
   }
 
-  editTransaction(transaction: TransactionModel): void {
+  public editTransaction(transaction: TransactionModel): void {
     this.openTransactionFormDialog();
     this.transactionForm.patchValue(transaction);
   }
 
-  get page(): AbstractControl {
+  public get page(): AbstractControl {
     return this.paramsForm.get('page');
   }
 }

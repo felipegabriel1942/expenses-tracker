@@ -17,6 +17,7 @@ import { BadgeModule } from 'primeng/badge';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { HomeRoutingModule } from './home-routing.module';
 
@@ -53,7 +54,8 @@ import { TransactionChartComponent } from './components/transaction-chart/transa
     BadgeModule,
     SelectButtonModule,
     RadioButtonModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    InputSwitchModule
   ],
 })
 export class HomeModule {}

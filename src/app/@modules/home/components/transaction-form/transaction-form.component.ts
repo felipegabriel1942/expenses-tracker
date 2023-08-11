@@ -63,11 +63,28 @@ export class TransactionFormComponent implements OnInit, OnChanges {
     );
   }
 
-  get description(): AbstractControl {
+  public save(): void {
+    if (!this.canShowRepetitionFields) {
+      this.resetRepetitionFields();
+    }
+
+    this.onSave.emit();
+  }
+
+  private resetRepetitionFields(): void {
+    this.form.get('totalInstallments').setValue(1);
+    this.form.get('period').setValue(PeriodEnum.MONTHLY);
+  }
+
+  public get description(): AbstractControl {
     return this.form.get('description');
   }
 
-  get transactionType(): AbstractControl {
+  public get transactionType(): AbstractControl {
     return this.form.get('transactionType');
+  }
+
+  public get canShowRepetitionFields(): boolean {
+    return this.form?.get('id').value == null && this.form.get('repeat').value;
   }
 }
