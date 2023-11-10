@@ -12,9 +12,13 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "@consts/*": ["./src/app/consts/*"],
+      "@services/*": ["./src/app/@services/*"],
+      "@models/*": ["./src/app/@models/*"],
+      "@enums/*": ["./src/app/@enums/*"],
+      "@utils/*": ["./src/app/utils/*"]
+    }
   }
 }

@@ -26,7 +26,6 @@ export class AuthGuardService implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-
     if (sessionStorage.getItem('token')) {
       return true;
     }

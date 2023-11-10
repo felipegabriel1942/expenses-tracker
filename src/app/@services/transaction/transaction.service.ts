@@ -72,9 +72,7 @@ export class TransactionService {
     );
   }
 
-  deleteAllTransactions(
-    transactionId: number
-  ): Observable<ApiResponse<void>> {
+  deleteAllTransactions(transactionId: number): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(
       `${this.baseUrl}/delete-all-transactions?id=${transactionId}`
     );

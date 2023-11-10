@@ -1,0 +1,75 @@
+<p-panel header="Período">
+  <div [formGroup]="form">
+    <p-calendar
+      formControlName="period"
+      view="month"
+      dateFormat="mm-yy"
+      [readonlyInput]="true"
+      [style]="{ width: '100%' }"
+      [inputStyle]="{ width: '100%' }"
+      (onSelect)="getDashboard()"
+    ></p-calendar>
+  </div>
+</p-panel>
+
+<div class="grid mt-1">
+  <div class="col">
+    <ng-template
+      *ngTemplateOutlet="
+        summaryCard;
+        context: {
+          $implicit: {
+            header: 'Despesas',
+            icon: icons.expense,
+            value: dashboard.expensesTotal
+          }
+        }
+      "
+    ></ng-template>
+  </div>
+  <div class="col">
+    <ng-template
+      *ngTemplateOutlet="
+        summaryCard;
+        context: {
+          $implicit: {
+            header: 'Receitas',
+            icon: icons.revenue,
+            value: dashboard.revenuesTotal
+          }
+        }
+      "
+    ></ng-template>
+  </div>
+  <div class="col">
+    <ng-template
+      *ngTemplateOutlet="
+        summaryCard;
+        context: {
+          $implicit: {
+            header: 'Resultado',
+            icon: icons.result,
+            value: dashboard.revenuesTotal - dashboard.expensesTotal
+          }
+        }
+      "
+    ></ng-template>
+  </div>
+
+  <ng-template #summaryCard let-summary>
+    <p-panel [header]="summary?.header">
+      <div class="grid">
+        <div class="col"><img [src]="summary?.icon" /></div>
+        <div class="col flex align-content-center" *ngIf="!isLoading">
+          <span class="flex align-items-center justify-content-center">{{
+            summary?.value | currency
+          }}</span>
+        </div>
+        <p-progressSpinner
+          styleClass="w-4rem h-4rem"
+          *ngIf="isLoading"
+        ></p-progressSpinner>
+      </div>
+    </p-panel>
+  </ng-template>
+</div>

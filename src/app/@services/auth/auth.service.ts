@@ -1,15 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/@models/api-reponse.model';
 import { environment } from 'src/environments/environment';
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  public isLogged = new BehaviorSubject<boolean>(false);
 
   private baseApi = environment.baseApi;
 
